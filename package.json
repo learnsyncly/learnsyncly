@@ -1,0 +1,33 @@
+{
+  "name": "learnsyncly",
+  "version": "0.0.0",
+  "description": "An app that syncs videos and slideshows",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LearnSyncly/learnSyncly.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/LearnSyncly/learnSyncly/issues"
+  },
+  "homepage": "https://github.com/adamdobkin/learnSyncly#readme",
+  "dependencies": {
+    "angular": "^1.4.8",
+    "angular-ui-router": "^0.2.15",
+    "browserify": "^12.0.1",
+    "express": "^4.13.3",
+    "gulp": "^3.9.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-load-plugins": "^1.2.0",
+    "gulp-nodemon": "^2.0.6",
+    "gulp-sass": "^2.1.1",
+    "gulp-shell": "^0.5.1",
+    "gulp-uglify": "^1.5.1",
+    "jshint": "^2.8.0",
+    "mongoose": "^4.3.4",
+    "socket.io": "^1.4.1"
+  }
+}
