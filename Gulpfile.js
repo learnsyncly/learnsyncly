@@ -15,14 +15,13 @@ gulp.task('copyToBuild', function(){
 
 //run browserify
 gulp.task('runBrowserify', function(){
-  gulp.src('/src/public/index.html')
+  gulp.src('./src/public/app/app.js')
     .pipe(plugin.browserify())
-    .pipe(gulp.dest('/src/public/lib/allLibs.js'));
+    .pipe(gulp.dest('./src/public/lib/'));
 });
 
-
-//start dev version using
-gulp.task('devStart', function(){
+//start dev version using nodemon
+gulp.task('nodemon', function(){
   plugin.nodemon({script: 'src/server.js', ignore: 'node_modules/**/*.js'});
 });
 
