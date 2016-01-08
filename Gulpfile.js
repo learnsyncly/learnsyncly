@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 var gulpLoadPlugins = require('gulp-load-plugins');
 var plugin = gulpLoadPlugins();
+var browserify = require('browserify');
+var vss = require('vinyl-source-stream');
 
 var copyFiles = [
   './src/**/*',
@@ -13,10 +15,21 @@ gulp.task('copyToBuild', function(){
   gulp.src(copyFiles).pipe(gulp.dest('./build'));
 });
 
-//run browserify
-gulp.task('runBrowserify', function(){
-  gulp.src('./src/public/app/app.js')
-    .pipe(plugin.browserify())
+//delete the allLibs before running browserify
+gulp.task('deleteLibs', plugin.shell.task([
+  'rm src/public/lib/allLibs.js'
+]));
+
+//browserify using vinyl source streams (gulp-browserify no longer maintained)
+//allLibs.js must be deleted before running or there will be an error
+gulp.task('browserify', function() {
+  //file to browserify
+  return browserify('./src/public/app/app.js')
+    .bundle()
+    .on('error', function(error){console.log(error);})
+    //output name
+    .pipe(vss('allLibs.js'))
+    //output location
     .pipe(gulp.dest('./src/public/lib/'));
 });
 
@@ -30,6 +43,9 @@ gulp.task('start', plugin.shell.task([
   'echo Starting the server!',
   'node build/server.js'
 ]));
+
+//build
+gulp.task('runBrowserify', ['deleteLibs','browserify']);
 
 //build
 gulp.task('build', ['runBrowserify','copyToBuild']);
