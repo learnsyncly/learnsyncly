@@ -28,6 +28,7 @@
     "jshint": "^2.8.0",
     "mongoose": "^4.3.4",
     "socket.io": "^1.4.1",
+    "socket.io-client": "^1.4.2",
     "vinyl-source-stream": "^1.1.0"
   }
 }
