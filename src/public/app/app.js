@@ -1,5 +1,6 @@
 angular.module('lsync', [
   'ui.router'
+  'lsync.services'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
