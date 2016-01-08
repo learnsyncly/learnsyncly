@@ -4,21 +4,17 @@ var plugin = gulpLoadPlugins();
 var browserify = require('browserify');
 var vss = require('vinyl-source-stream');
 
+//TODO preventy copying files which will be concat/minified during build
 var copyFiles = [
-  './src/**/*',
-  '!./src/public/css/',
-  '!./src/public/lib/',
+  './src/**/*'
+  // '!./src/public/css/',
+  // '!./src/public/lib/',
 ];
 
 //copy dev to build
 gulp.task('copyToBuild', function(){
   gulp.src(copyFiles).pipe(gulp.dest('./build'));
 });
-
-//delete the allLibs before running browserify
-gulp.task('deleteLibs', plugin.shell.task([
-  'rm src/public/lib/allLibs.js'
-]));
 
 //lint
 gulp.task('lint', function() {
@@ -55,12 +51,8 @@ gulp.task('watch', function(){
   gulp.watch('./src/public/app/**/*', ['build']);
 });
 
-//run browserify
-gulp.task('runBrowserify', ['deleteLibs','browserify']);
-
 //build
-gulp.task('build', ['lint','runBrowserify','copyToBuild']);
+gulp.task('build', ['lint','browserify','copyToBuild']);
 
-
-//dev RUN DEV TO LAUNCH NODEMON AND KEEP AN EYE ON FILES AUTOMATICALLY
+//DEV TO LAUNCH NODEMON AND KEEP AN EYE ON FILES AUTOMATICALLY
  gulp.task('dev', ['watch','nodemon']);
