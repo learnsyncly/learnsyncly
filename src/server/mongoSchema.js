@@ -13,9 +13,13 @@ var userSchema = new Schema({
 var presentationSchema = new Schema({
   name: { type: String, required: true, unique: true },
   length: Number,
+  videos:[{
+    aspectRatio: Number
+  }],
   slides: [{
     timestamp: Date,
-    slide: Number
+    slide: Number,
+    aspectRatio: Number
   }]
 });
 
