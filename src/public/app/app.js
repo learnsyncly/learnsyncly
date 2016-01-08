@@ -4,6 +4,8 @@ require('angular-ui-router');
 require('./services.js');
 require('./entry/entry.js');
 require('./video/video.js');
+require('./slideshow/slideshow.js');
+
 //other dependencies
 require('../../../node_modules/socket.io-client/socket.io.js');
 
