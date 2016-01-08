@@ -12,6 +12,9 @@ var copyFiles = [
   // '!./src/public/lib/',
 ];
 
+//Build for Heroku
+gulp.task('heroku:production', ['build']);
+
 //copy dev to build
 gulp.task('copyToBuild', function(){
   return gulp.src(copyFiles).pipe(gulp.dest('./build'));
