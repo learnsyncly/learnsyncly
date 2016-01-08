@@ -41,7 +41,7 @@ gulp.task('browserify', function() {
 
 //start dev version using nodemon
 gulp.task('nodemon', function(){
-  plugin.nodemon({script: 'src/server.js', ignore: 'node_modules/**/*.js'});
+  plugin.nodemon({script: 'src/server.js', watch: ['src/server/**/*','src/server.js']});
 });
 
 //start build version
@@ -50,8 +50,17 @@ gulp.task('start', plugin.shell.task([
   'node build/server.js'
 ]));
 
-//build
+//watch
+gulp.task('watch', function(){
+  gulp.watch('./src/public/app/**/*', ['build']);
+});
+
+//run browserify
 gulp.task('runBrowserify', ['deleteLibs','browserify']);
 
 //build
 gulp.task('build', ['lint','runBrowserify','copyToBuild']);
+
+
+//dev RUN DEV TO LAUNCH NODEMON AND KEEP AN EYE ON FILES AUTOMATICALLY
+ gulp.task('dev', ['watch','nodemon']);
