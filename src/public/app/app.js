@@ -1,6 +1,9 @@
+//angular dependencies
 require('angular');
 require('angular-ui-router');
 require('./entry/entry.js');
+//other dependencies
+require('../../../node_modules/socket.io-client/socket.io.js');
 
 angular.module('lsync', [
   'ui.router',
