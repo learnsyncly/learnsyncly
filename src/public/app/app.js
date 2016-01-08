@@ -1,5 +1,12 @@
+//other dependencies
+require('../../../node_modules/socket.io-client/socket.io.js');
+//angular dependencies
+require('angular');
+require('angular-ui-router');
+require('./entry/entry.js');
+
 angular.module('lsync', [
-  'ui.router'
+  'ui.router',
   'lsync.services'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
