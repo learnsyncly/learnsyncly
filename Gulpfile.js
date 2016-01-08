@@ -20,6 +20,12 @@ gulp.task('deleteLibs', plugin.shell.task([
   'rm src/public/lib/allLibs.js'
 ]));
 
+//lint
+gulp.task('lint', function() {
+  return gulp.src('./src/public/app/**/*.js')
+    .pipe(plugin.jshint());
+});
+
 //browserify using vinyl source streams (gulp-browserify no longer maintained)
 //allLibs.js must be deleted before running or there will be an error
 gulp.task('browserify', function() {
@@ -48,4 +54,4 @@ gulp.task('start', plugin.shell.task([
 gulp.task('runBrowserify', ['deleteLibs','browserify']);
 
 //build
-gulp.task('build', ['runBrowserify','copyToBuild']);
+gulp.task('build', ['lint','runBrowserify','copyToBuild']);
