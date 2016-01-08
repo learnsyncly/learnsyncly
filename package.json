@@ -11,6 +11,9 @@
   "bugs": {
     "url": "https://github.com/LearnSyncly/learnSyncly/issues"
   },
+  "scripts" : {
+    "start" : "node server.js"  
+  },
   "homepage": "https://github.com/adamdobkin/learnSyncly#readme",
   "dependencies": {
     "angular": "^1.4.8",
