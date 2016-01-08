@@ -12,11 +12,12 @@ var httpServer = app.listen(port, function() {
   console.log('Listening on', port);
 });
 
-//use https when deployed to heroku
-//note headers can be spoofed so this isn't very reliable
-//but req.secure doesn't work in heroku
+// use https when deployed to heroku
+// note headers can be spoofed so this isn't very reliable
+// but req.secure doesn't work in heroku
 var checkHerokuHTTPS = function(req, res, next) {
-  if (req.ip !== '::ffff:127.0.0.1' && req.ip != '::1') {
+  var ip = req.ip;
+  if (ip !== '::ffff:127.0.0.1' && ip != '::1') {
     if (req.header('x-forwarded-proto') !== 'https') {
       return res.redirect('https://' + req.headers.host + req.url);
     }
