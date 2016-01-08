@@ -16,8 +16,7 @@ var httpServer = app.listen(port, function() {
 //note headers can be spoofed so this isn't very reliable
 //but req.secure doesn't work in heroku
 var checkHerokuHTTPS = function(req, res, next) {
-  var ip = req.connection.remoteAddress.slice(7);
-  if (ip !== '127.0.0.1') {
+  if (req.ip !== '::ffff:127.0.0.1' && req.ip != '::1') {
     if (req.header('x-forwarded-proto') !== 'https') {
       return res.redirect('https://' + req.headers.host + req.url);
     }
