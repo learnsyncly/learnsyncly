@@ -3,6 +3,7 @@ var gulpLoadPlugins = require('gulp-load-plugins');
 var plugin = gulpLoadPlugins();
 var browserify = require('browserify');
 var vss = require('vinyl-source-stream');
+var stylish = require('jshint-stylish');
 
 //TODO preventy copying files which will be concat/minified during build
 var copyFiles = [
@@ -19,7 +20,8 @@ gulp.task('copyToBuild', function(){
 //lint
 gulp.task('lint', function() {
   return gulp.src('./src/public/app/**/*.js')
-    .pipe(plugin.jshint());
+    .pipe(plugin.jshint())
+    .pipe(plugin.jshint.reporter(stylish));
 });
 
 //browserify using vinyl source streams (gulp-browserify no longer maintained)

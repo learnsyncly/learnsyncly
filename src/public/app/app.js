@@ -8,12 +8,14 @@ require('./slideshow/slideshow.js');
 
 //other dependencies
 require('../../../node_modules/socket.io-client/socket.io.js');
+require('../../../node_modules/jquery/dist/jquery.js');
 
 angular.module('lsync', [
   'ui.router',
   'lsync.services',
   'lsync.entry',
-  'lsync.video'
+  'lsync.video',
+  'lsync.slideshow'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
@@ -22,5 +24,10 @@ angular.module('lsync', [
       url: '/',
       templateUrl: 'app/entry/entry.html',
       controller: 'EntryController'
+    })
+    .state('slideshow', {
+      url: '/slideshow',
+      templateUrl: 'app/slideshow/slideshow.html',
+      controller: 'SlideshowController'
     });
 });
