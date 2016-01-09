@@ -14,12 +14,12 @@ var copyFiles = [
 
 //copy dev to build
 gulp.task('copyToBuild', function(){
-  gulp.src(copyFiles).pipe(gulp.dest('./build'));
+  return gulp.src(copyFiles).pipe(gulp.dest('./build'));
 });
 
 //lint
 gulp.task('lint', function() {
-  return gulp.src('./src/public/app/**/*.js')
+  return gulp.src(['./src/public/app/**/*.js','!src/public/lib/allLibs.js'])
     .pipe(plugin.jshint())
     .pipe(plugin.jshint.reporter(stylish));
 });
@@ -39,7 +39,7 @@ gulp.task('browserify', function() {
 
 //start dev version using nodemon
 gulp.task('nodemon', function(){
-  plugin.nodemon({script: 'src/server.js', watch: ['src/server/**/*','src/server.js']});
+  return plugin.nodemon({script: 'src/server.js', watch: ['src/server/**/*','src/server.js']});
 });
 
 //start build version
@@ -50,7 +50,7 @@ gulp.task('start', plugin.shell.task([
 
 //watch
 gulp.task('watch', function(){
-  gulp.watch('./src/public/app/**/*', ['build']);
+  return gulp.watch('./src/public/app/**/*', ['build']);
 });
 
 //build
