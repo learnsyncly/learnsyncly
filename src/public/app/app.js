@@ -22,11 +22,13 @@ angular.module('lsync', [
   $stateProvider
     .state('login', {
       url:'/login',
-      templateUrl: 'app/auth/login.html'
+      templateUrl: 'app/auth/login.html',
+      controller: 'AuthController'
     })
     .state('signup', {
       url:'/signup',
-      templateUrl: 'app/auth/signup.html'
+      templateUrl: 'app/auth/signup.html',
+      controller: 'AuthController'
     })
     .state('entry', {
       url: '/',
