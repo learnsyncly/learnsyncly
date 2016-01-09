@@ -17,6 +17,15 @@ angular.module('lsync.services', [])
 
   return video;
 })
-.factory('SlideshowState', function(){
-  //store slideshow state data here
+.factory('SlideshowState', function($rootScope){
+  data = {};
+  data.aspectRatio = 'aspect16-9';
+  data.baseUrl = 'https://docs.google.com/presentation/d/1BrXgyVVKE02KvH8AcyHAs8KK-n1_mk3517uI5bXeOvw/embed?#slide=';
+  data.slideNumber = 0;
+  setInterval(function(){
+    data.slideNumber ++;
+    //factory uses $rootScope.$emit to prevent messages from traversing nested $scopes
+    $rootScope.$emit('slideDataChange');
+  },2000);
+  return data;
 });
