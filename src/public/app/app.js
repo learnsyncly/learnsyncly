@@ -20,6 +20,16 @@ angular.module('lsync', [
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
   $stateProvider
+    .state('login', {
+      url:'/login',
+      templateUrl: 'app/auth/login.html',
+      controller: 'AuthController'
+    })
+    .state('signup', {
+      url:'/signup',
+      templateUrl: 'app/auth/signup.html',
+      controller: 'AuthController'
+    })
     .state('entry', {
       url: '/',
       templateUrl: 'app/entry/entry.html',
