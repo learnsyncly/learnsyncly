@@ -39,5 +39,15 @@ angular.module('lsync', [
       url: '/slideshow',
       templateUrl: 'app/slideshow/slideshow.html',
       controller: 'SlideshowController'
+    })
+    .state('create', {
+      url: '/create',
+      templateUrl: 'app/main/main.html',
+      controller: 'MainController'
+    })
+    .state('create.video', {
+      // url: '/create/video',
+      templateUrl: 'app/video/video.html',
+      controller: 'VideoController'
     });
 });
