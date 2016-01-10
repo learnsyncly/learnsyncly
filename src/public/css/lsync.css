@@ -9,6 +9,10 @@
 
 /*Content & Columns */
 /**************************************************/
+.aspectEmbedWrap {
+  overflow: hidden;
+}
+
 .aspectEmbedContainer {
   position: relative;
   width: 100%;
@@ -27,7 +31,7 @@
   padding-top: 56.25%;
 }
 
-.aspectEmbedItem {
+.aspectEmbedFrame {
   position: absolute;
   height:100%;
   width: 100%;
@@ -35,6 +39,14 @@
   left:0;
   /*negative z-index prevents clicks by the user*/
   z-index: -1;
+}
+
+.slideWrap .aspectEmbedFrame{
+  background-color:#000;
+}
+
+.slideWrap.noControls .aspectEmbedContainer{
+  margin-bottom:-30px;
 }
 
 /*Footer*/
