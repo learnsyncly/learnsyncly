@@ -1,4 +1,21 @@
 <h5>Video</h5>
+<a ng-click="alertCurrentTime()">Current Video Time</a>
+<script src="https://www.youtube.com/iframe_api"></script>
 <iframe id="player" type="text/html" width="640" height="390"
   src="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com"
   frameborder="0"></iframe>
+
+<script>
+  var controller; 
+  function onYouTubeIframeAPIReady() {
+  controller = new YT.Player('player', {
+    height: '390',
+    width: '640',
+    videoId: 'M7lc1UVf-VE',
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange
+    }
+  });
+  }
+</script>
