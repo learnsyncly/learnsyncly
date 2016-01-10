@@ -11,6 +11,10 @@
   "bugs": {
     "url": "https://github.com/LearnSyncly/learnSyncly/issues"
   },
+  "scripts" : {
+    "start" : "node src/server.js",
+    "postinstall" : "gulp build"
+  },
   "homepage": "https://github.com/adamdobkin/learnSyncly#readme",
   "dependencies": {
     "angular": "^1.4.8",
