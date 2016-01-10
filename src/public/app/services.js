@@ -1,6 +1,11 @@
 angular.module('lsync.services', [])
-.factory('AppState', function(){
+.factory('AppState', function(SlideState, VideoState, UserState){
+  appState = {};
+  appState.slide = SlideState;
+  appState.video = VideoState;
+  appState.user = UserState;
   //store app state data here
+  return appState;
 })
 .factory('UserState', function(){
   //store video state data here
@@ -17,15 +22,22 @@ angular.module('lsync.services', [])
 
   return video;
 })
-.factory('SlideshowState', function($rootScope){
-  data = {};
-  data.aspectRatio = 'aspect16-9';
-  data.baseUrl = 'https://docs.google.com/presentation/d/1BrXgyVVKE02KvH8AcyHAs8KK-n1_mk3517uI5bXeOvw/embed?#slide=';
-  data.slideNumber = 0;
-  setInterval(function(){
-    data.slideNumber ++;
-    //factory uses $rootScope.$emit to prevent messages from traversing nested $scopes
-    $rootScope.$emit('slideDataChange');
-  },2000);
-  return data;
+.factory('SlideState', function($rootScope, $sce){
+  //initial properties
+  var slide = {};
+
+  //data object to help namespace scope when extended on controller
+  slide.data = {};
+  slide.data.aspectRatio = 'aspect16-9';
+  slide.data.baseUrl = 'https://docs.google.com/presentation/d/1BrXgyVVKE02KvH8AcyHAs8KK-n1_mk3517uI5bXeOvw/embed?#slide=';
+  slide.data.slideNumber = 0;
+  slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
+
+  //methods accessable from SlideState
+  slide.setSlide = function(number){
+    slide.data.slideNumber = number;
+    console.log(slide.data.slideNumber);
+  };
+
+  return slide;
 });
