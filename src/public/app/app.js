@@ -25,9 +25,9 @@ angular.module('lsync', [
       templateUrl: 'app/auth/login.html',
       controller: 'AuthController'
     })
-    .state('signup', {
-      url:'/signup',
-      templateUrl: 'app/auth/signup.html',
+    .state('register', {
+      url:'/register',
+      templateUrl: 'app/auth/register.html',
       controller: 'AuthController'
     })
     .state('entry', {
