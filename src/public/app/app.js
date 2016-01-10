@@ -46,8 +46,8 @@ angular.module('lsync', [
       templateUrl: 'app/main/main.html',
       controller: 'MainController'
     })
-    .state('create.video', {
-      // url: '/create/video',
+    .state('video', {
+      url: '/video',
       templateUrl: 'app/video/video.html',
       controller: 'VideoController'
     });
