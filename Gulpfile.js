@@ -12,6 +12,9 @@ var copyFiles = [
   // '!./src/public/lib/',
 ];
 
+//Build for Heroku
+gulp.task('heroku:production', ['build']);
+
 //copy dev to build
 gulp.task('copyToBuild', function(){
   return gulp.src(copyFiles).pipe(gulp.dest('./build'));
@@ -56,5 +59,7 @@ gulp.task('watch', function(){
 //build
 gulp.task('build', ['lint','browserify','copyToBuild']);
 
+
 //DEV TO LAUNCH NODEMON AND KEEP AN EYE ON FILES AUTOMATICALLY
  gulp.task('dev', ['watch','nodemon']);
+
