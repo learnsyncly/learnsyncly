@@ -59,5 +59,7 @@ gulp.task('watch', function(){
 //build
 gulp.task('build', ['lint','browserify','copyToBuild']);
 
+
 //DEV TO LAUNCH NODEMON AND KEEP AN EYE ON FILES AUTOMATICALLY
  gulp.task('dev', ['watch','nodemon']);
+
