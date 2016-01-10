@@ -33,11 +33,13 @@ gulp.task('browserify', function() {
   //file to browserify
   return browserify('./src/public/app/app.js')
     .bundle()
-    .on('error', function(error){console.log(error);})
+    .on('error', function(err){console.log(err.message);})
     //output name
     .pipe(vss('allLibs.js'))
+    .on('error', function(err){console.log(err.message);})
     //output location
-    .pipe(gulp.dest('./src/public/lib/'));
+    .pipe(gulp.dest('./src/public/lib/'))
+    .on('error', function(err){console.log(err.message);});
 });
 
 //start dev version using nodemon
@@ -46,10 +48,13 @@ gulp.task('nodemon', function(){
 });
 
 //start build version
-gulp.task('start', plugin.shell.task([
-  'echo Starting the server!',
-  'node build/server.js'
-]));
+gulp.task('start', function(){
+    return plugin.shell.task([
+      'echo Starting the server!',
+      'node build/server.js'
+    ]);
+  }
+);
 
 //watch
 gulp.task('watch', function(){
@@ -59,7 +64,5 @@ gulp.task('watch', function(){
 //build
 gulp.task('build', ['lint','browserify','copyToBuild']);
 
-
 //DEV TO LAUNCH NODEMON AND KEEP AN EYE ON FILES AUTOMATICALLY
  gulp.task('dev', ['watch','nodemon']);
-
