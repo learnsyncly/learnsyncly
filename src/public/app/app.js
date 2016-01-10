@@ -5,6 +5,7 @@ require('./services.js');
 require('./entry/entry.js');
 require('./video/video.js');
 require('./slide/slide.js');
+require('./main/main.js');
 
 //other dependencies
 require('../../../node_modules/socket.io-client/socket.io.js');
@@ -16,10 +17,11 @@ angular.module('lsync', [
   'lsync.services',
   'lsync.entry',
   'lsync.video',
-  'lsync.slide'
+  'lsync.slide',
+  'lsync.main'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/');
+  // $urlRouterProvider.otherwise('/');
   $stateProvider
     .state('login', {
       url:'/login',
@@ -36,19 +38,20 @@ angular.module('lsync', [
       templateUrl: 'app/entry/entry.html',
       controller: 'EntryController'
     })
-    .state('slide', {
-      url: '/slide',
-      templateUrl: 'app/slide/slide.html',
-      controller: 'SlideController'
-    })
     .state('create', {
+      abstract:true,
       url: '/create',
       templateUrl: 'app/main/main.html',
-      controller: 'MainController'
+      controller: 'MainController',
     })
     .state('create.video', {
-      // url: '/create/video',
+      url: '',
       templateUrl: 'app/video/video.html',
       controller: 'VideoController'
+    })
+    .state('create.slide', {
+      url: '',
+      templateUrl: 'app/slide/slide.html',
+      controller: 'SlideController'
     });
-});
+ });

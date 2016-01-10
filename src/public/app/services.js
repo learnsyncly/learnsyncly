@@ -9,18 +9,11 @@ angular.module('lsync.services', [])
 })
 .factory('UserState', function(){
   //store video state data here
+  return {};
 })
-.factory('VideoState', function(){
-  //store video state data here
-  video = {};
-  video.url = '';
-  video.currentTime = 0;
+.factory('VideoState', function($rootScope){
 
-  video.updateCurrentTime = function(){
-    return video.video.currentTime;
-  };
-
-  return video;
+  return {};
 })
 .factory('SlideState', function($rootScope, $sce){
   //initial properties
