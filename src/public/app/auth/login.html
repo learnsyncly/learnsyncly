@@ -1,9 +1,13 @@
-<div id='login'>
-  <h1>login</h1>
-  <form name="loginForm" ng-submit='login()'>
-    <input type='text'ng-model='user.username'>
-    <input type="password" ng-model='user.password'>
-    <button>login</button>
-  </form>
-  <a href="#/signup">Don't have an account? <strong>Signup</strong> ...</a>
+<div class="container" id='login'>
+  <div class="row">
+    <div class="col s6 offset-s3">
+      <h1>login</h1>
+      <form name="loginForm" ng-submit='login(user)'>
+        <input type='text' ng-model='user.username'>
+        <input type="password" ng-model='user.password'>
+        <button>login</button>
+      </form>
+      <a href="#/register">Don't have an account? <strong>Register</strong> ...</a>
+    </div>
+  </div>
 </div>
