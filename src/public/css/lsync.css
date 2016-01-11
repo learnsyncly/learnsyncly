@@ -1,5 +1,8 @@
 /*Basic Layout*/
 /**************************************************/
+body {
+  background-color:#494A4C;
+}
 
 /*Primary Navigation*/
 /**************************************************/
@@ -41,11 +44,11 @@
   z-index: -1;
 }
 
-.slideWrap .aspectEmbedFrame{
+.slideWrap .aspectEmbedFrame {
   background-color:#000;
 }
 
-.slideWrap.noControls .aspectEmbedContainer{
+.slideWrap.noControls .aspectEmbedContainer {
   margin-bottom:-30px;
 }
 

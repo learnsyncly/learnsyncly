@@ -31,7 +31,7 @@ angular.module('lsync', [
   'lsync.toolbar'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
-  // $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/');
   $stateProvider
     .state('login', {
       url:'/login',
@@ -59,7 +59,14 @@ angular.module('lsync', [
       templateUrl: 'app/main/container/slide/slide.html',
       controller: 'SlideController'
     })
-
+    .state('main',{
+      url: '/',
+      templateUrl: 'app/main/main.html',
+      controller: 'mainController'
+    })
+    // .state('',{})
+    // .state('',{})
+    // .state('',{})
 
 
 
@@ -69,5 +76,5 @@ angular.module('lsync', [
       url: '/slide',
       templateUrl: 'app/main/container/slide/slide.html',
       controller: 'SlideController'
-    })
+    });
  });
