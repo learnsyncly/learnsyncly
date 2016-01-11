@@ -1,8 +1,10 @@
-<div ui-view="toolbar"></div>
-<div class="container">
-  <div ui-view="flyout"></div>
-  <div id="videoSlideContainer">
-    <div ui-view="video"></div>
-    <div ui-view="slide"></div>
-  </div>
+<div id="mainWrapper" ng-class="{flyoutActive: data.flyoutActive, slideActive: data.slideActive}">
+  <div ui-view="toolbar"></div>
+    <div ui-view="flyout"></div>
+    <div id="mainPresentaion" class="section">
+      <div class="row">
+        <div ui-view="video"></div>
+        <div ui-view="slide"></div>
+      <div>
+    </div>
 </div>

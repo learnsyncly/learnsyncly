@@ -1,11 +1,13 @@
 <div class="row">
-  <div id="flyout" class="col m4 l3" ng-class="{toggled: flyout.status}">
-    <div class="section container">
+  <div id="flyout" class="col m4 l3">
+    <div class="section">
       <button id="flyoutMenuButton" ng-click="toggleFlyout()" class="btn-floating btn-large waves-effect waves-light red">
         <i class="material-icons">menu</i>
       </button>
       <div class="clearfix"></div>
-      <h5>Toggled Status: {{flyout.status}}</h5>
+      <h5>Click to change slides</h5>
+      <button class="waves-effect waves-light btn" ng-click="slide.next()"><i class="material-icons left">skip_next</i>Next Slide</button><br><br>
+      <button class="waves-effect waves-light btn" ng-click="slide.prev()"><i class="material-icons left">skip_previous</i>Prev Slide</button>
     </div>
   </div>
 </div>
