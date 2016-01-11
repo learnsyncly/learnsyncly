@@ -1,8 +1,15 @@
-<nav class="light-blue lighten-1" role="navigation">
-  <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
-    <ul class="side-nav">
-      <li><a href="#">Navbar Link</a></li>
-    </ul>
-    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+<div id="mainToolbar">
+  <div class="container section">
+    <div class="row">
+      <div class="col">
+        <button id="mainToolbarMenuButton" class="waves-effect waves-light light-blue btn" ng-click="toggleFlyout()">
+          <i class="material-icons left">menu</i>
+          Menu
+        </button>
+      </div>
+      <div id="mainToolbarRight"class="col">
+        <a href="#">Logout</a>
+      </div>
+    </div>
   </div>
-</nav>
+</div>
