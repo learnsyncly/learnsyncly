@@ -1,2 +1,8 @@
-Main page html here. This page will hold the main app and can display slightly
-different options depending on if it's in create or view mode.
+<div ui-view="toolbar"></div>
+<div class="container">
+  <div ui-view="flyout"></div>
+  <div id="videoSlideContainer">
+    <div ui-view="video"></div>
+    <div ui-view="slide"></div>
+  </div>
+</div>

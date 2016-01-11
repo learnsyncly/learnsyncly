@@ -4,6 +4,11 @@ angular.module('lsync.services', [])
     appState.slide = SlideState;
     appState.video = VideoState;
     appState.user = UserState;
+
+    //flyout status nested object for easy extending etc
+    appState.flyout = {};
+    appState.flyout.status = false;    
+
     //store app state data here
     return appState;
   })
