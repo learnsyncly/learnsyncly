@@ -90,7 +90,7 @@ lsyncViewWrap {
   transition:left .5s, opacity .25s;
 }
 
-#flyout.toggled {
+.flyoutActive #flyout {
   left:0;
   opacity:1;
 }
@@ -151,7 +151,7 @@ lsyncViewWrap {
 
   /*Basic Layout*/
   /**************************************************/
-
+  .row{padding:0 4em;}
 
 
   /*Primary Navigation*/
