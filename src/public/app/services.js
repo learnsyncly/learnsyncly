@@ -100,8 +100,5 @@ angular.module('lsync.services', [])
     };
 
 
-
-
-
     return slide;
   });
