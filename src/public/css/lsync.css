@@ -1,12 +1,35 @@
 /*Basic Layout*/
 /**************************************************/
+html {
+  height:100%;
+  width:100%;
+}
 body {
+  position:relative;
+  min-height:100%;
+  width:100%;
   background-color:#494A4C;
   color:#FFF;
 }
 
+lsyncViewWrap {
+  overflow:hidden;
+  width:100%;
+}
+
 /*Primary Navigation*/
 /**************************************************/
+#mainToolbar {
+  background-color:#616366;
+}
+
+#mainToolbar .row {
+  margin:0;
+}
+
+#mainToolbarRight {
+  float:right;
+}
 
 /*Header Layout*/
 /**************************************************/
@@ -51,6 +74,36 @@ body {
 
 .slideWrap.noControls .aspectEmbedContainer {
   margin-bottom:-30px;
+}
+
+#flyout {
+  position:absolute;
+  top:0;
+  left:0;
+  z-index:100;
+  width:100%;
+  height:100%;
+  background-color:#181919;
+  background-color:rgba(24,25,25,.8);
+  left:-100%;
+  opacity:0;
+  transition:left .5s, opacity .25s;
+}
+
+#flyout.toggled {
+  left:0;
+  opacity:1;
+}
+
+#flyoutColumn {
+  position:absolute;
+  background-color:#494A4C;
+  float:none;
+  height:100%;
+}
+
+#flyoutMenuButton {
+  float:right;
 }
 
 /*Footer*/
