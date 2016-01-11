@@ -21,8 +21,21 @@ angular.module('lsync.services', [])
     return {};
   })
   .factory('VideoState', function($rootScope) {
+    var video={};
+    video.data={
+      videoid:'',
+      curretTime:0
+    };
+    video.play = function(){
 
-    return {};
+    };
+    video.pause = function(){
+
+    };
+    video.seekTo = function(){
+
+    };
+    return video;
   })
   .factory('SlideState', function($rootScope, $sce) {
     //initial properties
