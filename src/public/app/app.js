@@ -8,12 +8,10 @@ require('./create/create.js');
 require('./main/main.js');
 require('./main/container/container.js');
 require('./main/container/slide/slide.js');
-// require('./main/container/video/video.js');
+require('./main/container/video/video.js');
 require('./main/flyout/flyout.js');
 require('./main/toolbar/toolbar.js');
 require('./services.js');
-//TODO: swap item with new path above
-require('./video/video.js');
 
 //other dependencies
 require('../../../node_modules/socket.io-client/socket.io.js');
@@ -28,6 +26,7 @@ angular.module('lsync', [
   'lsync.container',
   'lsync.flyout',
   'lsync.slide',
+  'lsync.video',
   'lsync.services',
   'lsync.toolbar'
 ])
@@ -52,9 +51,7 @@ angular.module('lsync', [
     })
     .state('create.video', {
       url: '',
-      //TODO: update me later
-      // templateUrl: 'app/main/container/video/video.html',
-      templateUrl: 'app/video/video.html',
+      templateUrl: 'app/main/container/video/video.html',
       controller: 'VideoController'
     })
     .state('create.slide', {
@@ -72,5 +69,5 @@ angular.module('lsync', [
       url: '/slide',
       templateUrl: 'app/main/container/slide/slide.html',
       controller: 'SlideController'
-    });
+    })
  });
