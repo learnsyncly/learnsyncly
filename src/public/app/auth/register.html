@@ -1,11 +1,11 @@
-<div class="container" id='register'>
-  <div class="row" id='register'>
+<div class="container" id="register">
+  <div class="row" id="register">
     <div class="col s6 offset-s3">
       <h1>register</h1>
-      <form name="registerForm" ng-submit='register(user)'>
-        <input type='text' ng-model='user.username'>
-        <input type="password" ng-model='user.password'>
-        <button>Register</button>
+      <form name="registerForm" ng-submit="register(user)" required>
+        <input type="text" ng-model="user.username" required>
+        <input type="password" ng-model="user.password" required>
+        <button ng-disabled="registerForm.$invalid">Register</button>
       </form>
       <a href="#/login">Already have an account? <strong>Login</strong> ...</a>
     </div>
