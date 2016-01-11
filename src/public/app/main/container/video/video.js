@@ -1,18 +1,18 @@
 angular.module('lsync.video', ['lsync.services'])
 .controller('VideoController', function($scope){
-  
+
   $scope.alertCurrentTime = function(){
     console.log($scope.player.getCurrentTime());
   };
-  
+
   $scope.url='https://www.youtube.com/watch?v=lBqiZSemrqg&ab_channel=TimKindberg';
-  
+
   $scope.alertCurrentTime = function(){
     console.log($scope.player.getCurrentTime());
   };
   $scope.data={
-    width: 600, 
-    height: 480, 
+    width: 600,
+    height: 480,
     videoid: "M7lc1UVf-VE"
   };
 })
@@ -52,9 +52,9 @@ angular.module('lsync.video', ['lsync.services'])
 
           height: scope.height,
           width: scope.width,
-          videoId: scope.videoid, 
+          videoId: scope.videoid,
         });
-      }
+      };
 
       scope.$watch('videoid', function(newValue, oldValue) {
         if (newValue == oldValue) {
@@ -63,7 +63,7 @@ angular.module('lsync.video', ['lsync.services'])
 
         player.cueVideoById(scope.videoid);
 
-      }); 
+      });
 
       scope.$watch('height + width', function(newValue, oldValue) {
         if (newValue == oldValue) {
@@ -73,6 +73,6 @@ angular.module('lsync.video', ['lsync.services'])
         player.setSize(scope.width, scope.height);
 
       });
-    }  
+    }
   };
 });
