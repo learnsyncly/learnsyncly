@@ -2,13 +2,22 @@
   <div class="section">
     <div class="row">
       <div class="col">
-        <button id="mainToolbarMenuButton" class="waves-effect waves-light light-blue btn" ng-click="toggleFlyout()">
-          <i class="material-icons left">menu</i>
-          Menu
+        <button id="mainToolbarMenuButton" class="waves-effect waves-light light-blue btn btn-large valign" ng-click="toggleFlyout()">
+          <i class="material-icons left">menu</i> Menu
         </button>
       </div>
-      <div id="mainToolbarRight"class="col">
-        <a href="#">Logout</a>
+
+      <div class="col floatRight">
+        <button id="flyoutMenuButton" ng-click="toggleSlideView()" class="btn-floating btn-large waves-effect waves-light red">
+          <i class="material-icons">picture_in_picture</i>
+        </button>
+      </div>
+      <div class="col floatRight">
+        <div class="valign-wrapper">
+          <h5 class="valign">
+            <a href="#">Logout</a>
+          </h5>
+        </div>
       </div>
     </div>
   </div>

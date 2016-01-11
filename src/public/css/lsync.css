@@ -12,23 +12,37 @@ body {
   color:#FFF;
 }
 
-lsyncViewWrap {
+#lsyncViewWrap {
   overflow:hidden;
   width:100%;
+}
+
+.floatRight,
+.col.floatRight  {
+  float:right;
 }
 
 /*Primary Navigation*/
 /**************************************************/
 #mainToolbar {
   background-color:#616366;
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:50;
 }
 
 #mainToolbar .row {
   margin:0;
 }
 
-#mainToolbarRight {
-  float:right;
+.padRight {
+  padding-right:1rem;
+}
+
+.padLeft {
+  padding-left:1rem;
 }
 
 /*Header Layout*/
@@ -106,14 +120,59 @@ lsyncViewWrap {
   float:right;
 }
 
-
-
-
-/*temporary proof of concept*/
-#mainSlideWrap {
-  width:30%;
-  float:right;
+#mainPresentaionWrap{
+  position:absolute;
+  height:100%;
+  width:100%;
+  z-index:10;
+  top:0;
+  right:0;
+  padding-top:3.625em;
+  transition: width .5s;
 }
+
+.flyoutActive #mainPresentaionWrap{
+  width:60%;
+}
+
+#mainSlideWrap {
+  position:absolute;
+  z-index:30;
+  width:30%;
+  bottom:2rem;
+  right:2rem;
+  border:.25rem solid #03a9f4;
+  padding:0;
+  transition:all 1s;
+}
+
+.slideActive #mainSlideWrap {
+  z-index:20;
+  width:100%;
+  bottom:0;
+  right:0;
+  border:.125rem solid transparent;
+}
+
+#mainVideoWrap {
+  position:absolute;
+  z-index:20;
+  width:100%;
+  bottom:0;
+  right:0;
+  border:.125rem solid transparent;
+  transition:all 1s;
+}
+
+.slideActive #mainVideoWrap {
+  z-index:30;
+  width:30%;
+  bottom:2rem;
+  right:2rem;
+  border:.25rem solid #03a9f4;
+  padding:0;
+}
+
 /*Footer*/
 /**************************************************/
 
