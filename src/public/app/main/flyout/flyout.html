@@ -1,12 +1,11 @@
-<div id="flyout" ng-class="{toggled: flyout.status}">
-  <div class="row">
-    <div id="flyoutColumn" class="col s4">
-      <div class="section container">
-      <button id="flyoutMenuButton" class="waves-effect waves-light light-blue darken-4 btn" ng-click="toggleFlyout()">
-        <i class="material-icons left">menu</i> Close Menu
+<div class="row">
+  <div id="flyout" class="col m4 l3" ng-class="{toggled: flyout.status}">
+    <div class="section container">
+      <button id="flyoutMenuButton" ng-click="toggleFlyout()" class="btn-floating btn-large waves-effect waves-light red">
+        <i class="material-icons">menu</i>
       </button>
+      <div class="clearfix"></div>
       <h5>Toggled Status: {{flyout.status}}</h5>
-    </div>
     </div>
   </div>
 </div>
