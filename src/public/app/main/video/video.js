@@ -40,7 +40,7 @@ angular.module('lsync.video', ['lsync.services'])
 
         player = new YT.Player(element.children()[0], {
           playerVars: {
-            autoplay: 0,
+            autoplay: 1,
             html5: 1,
             theme: "light",
             modesbranding: 0,
@@ -53,9 +53,17 @@ angular.module('lsync.video', ['lsync.services'])
           height: scope.height,
           width: scope.width,
           videoId: scope.videoid,
+
+          events:{
+            'onStateChange':onPlayerStateChange
+          }
         });
       };
 
+      var onPlayerStateChange = function(){
+        console.log('CURRENT TIME', player.getCurrentTime());
+      };
+      setInterval(onPlayerStateChange, 500);
       scope.$watch('videoid', function(newValue, oldValue) {
         if (newValue == oldValue) {
           return;
