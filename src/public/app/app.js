@@ -15,7 +15,6 @@ require('./services.js');
 
 //other dependencies
 require('../../../node_modules/socket.io-client/socket.io.js');
-require('../../../node_modules/jquery/dist/jquery.js');
 
 //LearnSyncly
 angular.module('lsync', [
@@ -31,7 +30,7 @@ angular.module('lsync', [
   'lsync.toolbar'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
-  // $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/');
   $stateProvider
     .state('login', {
       url:'/login',
@@ -43,12 +42,12 @@ angular.module('lsync', [
       templateUrl: 'app/auth/register.html',
       controller: 'AuthController'
     })
-    .state('create', {
-      abstract:true,
-      url: '/create',
-      templateUrl: 'app/main/main.html',
-      controller: 'MainController',
-    })
+    // .state('create', {
+    //   abstract:true,
+    //   url: '/create',
+    //   templateUrl: 'app/main/main.html',
+    //   controller: 'MainController',
+    // })
     .state('create.video', {
       url: '',
       templateUrl: 'app/main/container/video/video.html',
@@ -59,15 +58,27 @@ angular.module('lsync', [
       templateUrl: 'app/main/container/slide/slide.html',
       controller: 'SlideController'
     })
-
+    .state('main',{
+      url: '/',
+      templateUrl: 'app/main/main.html',
+      controller: 'MainController'
+    })
+    // .state('',{})
+    // .state('',{})
+    // .state('',{})
 
 
 
 
     ////TODO REMOVE ONCE ROUTES ARE WORKING!
+    .state('create', {
+      url: '/create',
+      templateUrl: 'app/create/create.html',
+      controller: 'CreateController'
+    })
     .state('slide', {
       url: '/slide',
       templateUrl: 'app/main/container/slide/slide.html',
       controller: 'SlideController'
-    })
+    });
  });
