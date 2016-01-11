@@ -7,4 +7,5 @@ angular.module('lsync.slide', [])
     $scope.data.url = $scope.setSlide(Math.floor(Math.random() * 30));
   };
 
+
 });

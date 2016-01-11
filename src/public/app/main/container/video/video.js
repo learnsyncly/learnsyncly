@@ -1,22 +1,26 @@
 angular.module('lsync.video', ['lsync.services'])
+// .constant('videoEvent', {
+//     stop:            0, 
+//     play:            1,
+//     pause:           2,
+//     currentTime:     3, 
+// })
 .controller('VideoController', function($scope){
   
-  $scope.alertCurrentTime = function(){
-    console.log($scope.player.getCurrentTime());
-  };
   
   $scope.url='https://www.youtube.com/watch?v=lBqiZSemrqg&ab_channel=TimKindberg';
   
-  $scope.alertCurrentTime = function(){
-    console.log($scope.player.getCurrentTime());
-  };
+  // $scope.sendVideoEvent=function(videoEvent) {
+  //   this.$broadcast(videoEvent);
+  // };
+
   $scope.data={
     width: 600, 
     height: 480, 
     videoid: "M7lc1UVf-VE"
   };
 })
-.directive('youtube', function($window) {
+.directive('youtube', ['VideoState', function($window, VideoState) {
   return {
     restrict: "E",
 
@@ -25,7 +29,7 @@ angular.module('lsync.video', ['lsync.services'])
       width: "@",
       videoid: "@"
     },
-
+/////////Create YouTube Iframe and player object////////////////////////
     template: '<div></div>',
 
     link: function(scope, element) {
@@ -40,9 +44,9 @@ angular.module('lsync.video', ['lsync.services'])
 
         player = new YT.Player(element.children()[0], {
           playerVars: {
-            autoplay: 0,
+            autoplay: 1,
             html5: 1,
-            theme: "light",
+            theme: "medium",
             modesbranding: 0,
             color: "white",
             iv_load_policy: 3,
@@ -54,8 +58,12 @@ angular.module('lsync.video', ['lsync.services'])
           width: scope.width,
           videoId: scope.videoid, 
         });
-      }
-
+      };
+///////////////////////////////////////////////////////////////
+      var checkTime=function(){
+        $rootScope.currentTime = player.getCurrentTime();
+      };
+      setInterval(checkTime, 500);
       scope.$watch('videoid', function(newValue, oldValue) {
         if (newValue == oldValue) {
           return;
@@ -73,6 +81,27 @@ angular.module('lsync.video', ['lsync.services'])
         player.setSize(scope.width, scope.height);
 
       });
+
+      // scope.$on(videoEvent.stop, function () {
+      //   player.stopVideo();
+      // });
+
+      
+
+      // scope.$on(videoEvent.play, function () {
+      //   player.playVideo();
+      // }); 
+
+      // scope.$on(videoEvent.pause, function () {
+      //   player.pauseVideo();
+      // });  
+
+      // scope.$on(videoEvent.currentTime, function(){
+      //   return player.getCurrentTime();
+      // }); 
     }  
   };
-});
+}]);
+
+
+

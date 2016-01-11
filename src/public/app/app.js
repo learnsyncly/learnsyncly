@@ -31,7 +31,7 @@ angular.module('lsync', [
   'lsync.toolbar'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
-  // $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/main');
   $stateProvider
     .state('login', {
       url:'/login',
@@ -46,28 +46,35 @@ angular.module('lsync', [
     .state('create', {
       abstract:true,
       url: '/create',
-      templateUrl: 'app/main/main.html',
-      controller: 'MainController',
+      templateUrl: 'app/create/create.html',
+      controller: 'CreateController',
     })
-    .state('create.video', {
-      url: '',
-      templateUrl: 'app/main/container/video/video.html',
-      controller: 'VideoController'
+    .state('main',{
+      url:'/main',
+      views: {
+        'video':{
+          templateUrl:'app/main/container/video/video.html',
+          controller:'VideoController'
+        },
+        'slide':{
+          templateUrl:'app/main/container/slide/slide.html',
+          controller:'SlideController'
+        },
+        'flyout':{
+          templateUrl:'app/main/flyout/flyout.html',
+          controller:'FlyoutController'
+        },
+        'toolbar':{
+          templateUrl:'app/main/toolbar/toolbar.html',
+          controller:'ToolbarController'
+        }
+      }
     })
-    .state('create.slide', {
-      url: '',
-      templateUrl: 'app/main/container/slide/slide.html',
-      controller: 'SlideController'
-    })
-
-
-
-
-
+    
     ////TODO REMOVE ONCE ROUTES ARE WORKING!
     .state('slide', {
       url: '/slide',
       templateUrl: 'app/main/container/slide/slide.html',
       controller: 'SlideController'
-    })
+    });
  });
