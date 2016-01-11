@@ -1,20 +1,20 @@
-angular.module('lsync.authentication', [])
-  .controller('AuthController', function($scope, AuthenticationFactory) {
+angular.module('lsync.auth', [])
+  .controller('AuthController', function($scope, Auth) {
     $scope.login = function(user) {
-      AuthenticationFactory.login(user);
+      Auth.login(user);
       //reset values in form
       $scope.user.username = '';
       $scope.user.password = '';
     };
 
     $scope.register = function(user) {
-      AuthenticationFactory.register(user);
+      Auth.register(user);
       //reset values in form
       $scope.user.username = '';
       $scope.user.password = '';
     };
 
     $scope.logout = function() {
-      AuthenticationFactory.logout();
+      Auth.logout();
     };
   });
