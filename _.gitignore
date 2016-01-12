@@ -4,6 +4,9 @@
 logs
 *.log
 
+# config
+/src/server/config.js
+
 # Runtime data
 pids
 *.pid
