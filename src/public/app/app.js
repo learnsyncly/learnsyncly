@@ -31,28 +31,36 @@ angular.module('lsync', [
   ])
   .config(function($stateProvider, $urlRouterProvider, $authProvider) {
 
-    function skipIfLoggedIn($q, $auth) {
-      var deferred = $q.defer();
-      if ($auth.isAuthenticated()) {
-        deferred.reject();
-      } else {
-        deferred.resolve();
-      }
-      return deferred.promise;
-    }
+    // function skipIfLoggedIn($q, $auth) {
+    //   var deferred = $q.defer();
+    //   if ($auth.isAuthenticated()) {
+    //     deferred.reject();
+    //   } else {
+    //     deferred.resolve();
+    //   }
+    //   return deferred.promise;
+    // }
 
-    function loginRequired($q, $location, $auth) {
-      var deferred = $q.defer();
-      if ($auth.isAuthenticated()) {
-        deferred.resolve();
-      } else {
-        $location.path('/login');
-      }
-      return deferred.promise;
-    }
+    // function loginRequired($q, $location, $auth) {
+    //   var deferred = $q.defer();
+    //   if ($auth.isAuthenticated()) {
+    //     deferred.resolve();
+    //   } else {
+    //     $location.path('/login');
+    //   }
+    //   return deferred.promise;
+    // }
+
+    $authProvider.github({
+      url: '/auth/github',
+      clientId: '2e8e4b8c6d51bd5a9622',
+      redirectUri: window.location.origin
+    });
 
     $authProvider.google({
-      clientId: '999928846531-1rgi7n93imidcduf6tunl2p847vjq6o5.apps.googleusercontent.com'
+      url: '/auth/google',
+      clientId: '999928846531-1rgi7n93imidcduf6tunl2p847vjq6o5.apps.googleusercontent.com',
+      redirectUri: window.location.origin
     });
 
     $urlRouterProvider.otherwise('/');
@@ -65,10 +73,7 @@ angular.module('lsync', [
       .state('login', {
         url: '/login',
         templateUrl: 'app/auth/login.html',
-        controller: 'AuthController',
-        resolve: {
-          skipIfLoggedIn: skipIfLoggedIn
-        }
+        controller: 'AuthController'
       })
       .state('main', {
         url: '/',
@@ -98,9 +103,6 @@ angular.module('lsync', [
       .state('register', {
         url: '/register',
         templateUrl: 'app/auth/register.html',
-        controller: 'AuthController',
-        resolve: {
-          skipIfLoggedIn: skipIfLoggedIn
-        }
+        controller: 'AuthController'
       });
   });

@@ -1,48 +1,45 @@
 angular.module('lsync.auth', [])
-  .controller('AuthController', function($scope, $state, $auth) {
-    $scope.credentials = {
-      username: '',
-      password: ''
-    };
-
-    $scope.login = function() {
-      $auth.login($scope.credentials)
-        .then(function() {
-          $location.path('/');
-        })
-        .catch(function(error) {
-		console.log("error", error);
-        });
+  .controller('AuthController', function($scope, $auth, $rootScope, $window, $state) {
+    var user = {
+      name: $scope.name,
+      email: $scope.email,
+      password: $scope.password
     };
 
     $scope.authenticate = function(provider) {
       $auth.authenticate(provider)
-        .then(function() {
-          $location.path('/');
+        .then(function(response) {
+          $window.localStorage.currentUser = JSON.stringify(response.data.user);
+          $rootScope.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+          $state.go('main');
         })
-        .catch(function(error) {
-          if (error.error) {
-            // Popup error - invalid redirect_uri, pressed cancel button, etc.
-            console.log("error");
-          } else if (error.data) {
-            // HTTP response error from server
-            console.log("error");
-          } else {
-            console.log("error");
-          }
+        .catch(function(response) {
+          console.log("response error", response);
         });
     };
-    // $scope.login = function(provider) {
-    //   $auth.authenticate(provider).then(function() {
-    //     $state.go('main');
-    //   });
-    // };
 
-    // $scope.register = function(credentials) {
+    //$auth is the injection for satellizer
+    $scope.login = function() {
+      $auth.login(user)
+        .then(function(response) {
+          $window.localStorage.currentUser = JSON.stringify(response.data.user);
+          $rootScope.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+          $state.go('main');
+        })
+        .catch(function(response) {
+          console.log(response);
+        });
+    };
 
-    // };
+    $scope.signup = function() {
 
-    // $scope.logout = function() {
-    //   Auth.logout();
-    // };
+      $auth.signup(user)
+        .then(function(response) {
+          $location.path('/login');
+        })
+        .catch(function(response) {
+          console.log(response.data);
+        });
+
+    };
   });
