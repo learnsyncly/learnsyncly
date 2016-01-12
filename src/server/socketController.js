@@ -1,5 +1,5 @@
 //takes a socket io server object
-module.exports = function(io){
+module.exports = function(io) {
 
   //event listener that detects socket.io connection event
   io.on('connection', function(socket){
@@ -11,7 +11,4 @@ module.exports = function(io){
       console.log('User disconnected.');
     });
   });
-
 };
-
-	

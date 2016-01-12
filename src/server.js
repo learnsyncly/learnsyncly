@@ -33,5 +33,6 @@ var io = new SocketServer(httpServer);
 //use static routes for single page app
 app.use(express.static(__dirname + '/public'));
 
+
 //call socketContoller passing in socket.io server
 socketController(io);
