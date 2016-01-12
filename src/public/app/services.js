@@ -1,5 +1,5 @@
 angular.module('lsync.services', [])
-  .factory('AppState', function(Auth, SlideState, VideoState, UserState, SocketState) {
+  .factory('AppState', function(Auth, SlideState, VideoState, UserState, SocketState, PresentationState) {
 
     appState = {};
     appState.slide = SlideState;
@@ -25,33 +25,35 @@ angular.module('lsync.services', [])
       }
     };
 
+  appState.setTimeIndex = function(index){
+    presentation.timeIndex=index;
+  };
+  appState.checkTime = function(){
+    if(appState.video.data.playing){
+      if(appState.video.data.currentTime>=presentation.timestamps[presentation.timeIndex]){
+        presentation.timeIndex++;
+        appState.video.pause();
+        appState.toggleSlideView();
+        appState.slide.next();
+      }
+    }
+  };
+ setInterval(appState.checkTime, 500);
+
     //store app state data here
     return appState;
   })
-// .factory('PresentationState', function(AppState){
-//  presentation={
-//   timestamps:[15,30,45,60,75,90],
-//   slides:[1,2,3,4,5,6],
-//   timeIndex:0
-//  };
-//  presentation.setTimeIndex = function(index){
-//   presentation.timeIndex=index;
-//  };
-//  presentation.checkTime = function(){
-//     if(AppState.video.data.playing){
-//       if(AppState.video.data.currentTime>=presentation.timestamps(presentation.timeIndex)){
-//         presentation.timeIndex++;
-//         AppState.video.pause();
-//         AppState.toggleSlideView();
-//         AppState.slide.next();
+.factory('PresentationState', function(){
+ presentation={
+  timestamps:[5,10,15,20,25,30],
+  // timestamps:[15,30,45,60,75,90],
+  slides:[1,2,3,4,5,6],
+  timeIndex:0
+ };
 
-//       }
-//     }
-//   };
-//  setInterval(presentaiton.checkTime, 500);
 
-//  return presentation;
-// })
+ return presentation;
+})
   .factory('Auth', function() {
     //store video state data here
     return {};
@@ -82,14 +84,17 @@ angular.module('lsync.services', [])
     video.data.aspectRatio = 'aspect16-9';
     video.data.identifier = 'M7lc1UVf-VE';
     video.data.url = '';
+    video.data.unPlayed=true;
 
     ytPlayerInit = function(event) {
       video.data.videoReady = true;
+      video.seekTo(1);
       setInterval(updatePlayer, 1000);
     };
 
     var updatePlayer = function() {
       video.data.currentTime = player.getCurrentTime();
+      console.log('new current time',video.data.currentTime);
     };
 
     video.play = function() {
@@ -159,6 +164,7 @@ angular.module('lsync.services', [])
     if (slide.data.slideNumber + 1 > slide.data.length) {
       return false;
     }
+    console.log('INSIDE NEXT');
     slide.data.slideNumber++;
     slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
     return true;
