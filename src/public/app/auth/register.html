@@ -2,7 +2,7 @@
   <div class="row" id="register">
     <div class="col s6 offset-s3">
       <h1>register</h1>
-      <form name="registerForm" ng-submit="register(user)" required>
+      <form method="post"  name="registerForm" ng-submit="register()" required>
         <input type="text" ng-model="user.username" required>
         <input type="password" ng-model="user.password" required>
         <button ng-disabled="registerForm.$invalid">Register</button>

@@ -1,45 +1,34 @@
 angular.module('lsync.auth', [])
-  .controller('AuthController', function($scope, $auth, $rootScope, $window, $state) {
-    var user = {
-      name: $scope.name,
-      email: $scope.email,
-      password: $scope.password
-    };
+  .controller('AuthController', function($scope, $rootScope, $window, $state, Auth) {
+    $scope.user = {};
+    $rootScope.unread = $rootScope.unread || 0;
 
-    $scope.authenticate = function(provider) {
-      $auth.authenticate(provider)
-        .then(function(response) {
-          $window.localStorage.currentUser = JSON.stringify(response.data.user);
-          $rootScope.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-          $state.go('main');
-        })
-        .catch(function(response) {
-          console.log("response error", response);
-        });
-    };
+    if (Auth.isAuth()) {
+      $rootScope.hasAuth = true;
+    }
 
-    //$auth is the injection for satellizer
     $scope.login = function() {
-      $auth.login(user)
-        .then(function(response) {
-          $window.localStorage.currentUser = JSON.stringify(response.data.user);
-          $rootScope.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      Auth.login($scope.user)
+        .then(function(token) {
+          $window.localStorage.setItem('com.lsyncly', token);
+          $rootScope.hasAuth = true;
           $state.go('main');
+          $scope.checkNotifications();
         })
-        .catch(function(response) {
-          console.log(response);
+        .catch(function(error) {
+          console.error(error);
         });
     };
 
-    $scope.signup = function() {
-
-      $auth.signup(user)
-        .then(function(response) {
-          $location.path('/login');
+    $scope.register = function() {
+      Auth.register($scope.user)
+        .then(function(token) {
+          $window.localStorage.setItem('com.lsyncly', token);
+          $rootScope.hasAuth = true;
+          $state.go('main');
         })
-        .catch(function(response) {
-          console.log(response.data);
+        .catch(function(error) {
+          console.error(error);
         });
-
     };
   });

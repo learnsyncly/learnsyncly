@@ -3,7 +3,6 @@
 //angular dependencies
 require('angular');
 require('angular-ui-router');
-require('satellizer');
 require('./auth/auth.js');
 require('./create/create.js');
 require('./main/main.js');
@@ -20,7 +19,6 @@ require('../../../node_modules/socket.io-client/socket.io.js');
 angular.module('lsync', [
     'ui.router',
     'lsync.auth',
-    'satellizer',
     'lsync.create',
     'lsync.main',
     'lsync.flyout',
@@ -29,40 +27,7 @@ angular.module('lsync', [
     'lsync.services',
     'lsync.toolbar'
   ])
-  .config(function($stateProvider, $urlRouterProvider, $authProvider) {
-
-    // function skipIfLoggedIn($q, $auth) {
-    //   var deferred = $q.defer();
-    //   if ($auth.isAuthenticated()) {
-    //     deferred.reject();
-    //   } else {
-    //     deferred.resolve();
-    //   }
-    //   return deferred.promise;
-    // }
-
-    // function loginRequired($q, $location, $auth) {
-    //   var deferred = $q.defer();
-    //   if ($auth.isAuthenticated()) {
-    //     deferred.resolve();
-    //   } else {
-    //     $location.path('/login');
-    //   }
-    //   return deferred.promise;
-    // }
-
-    $authProvider.github({
-      url: '/auth/github',
-      clientId: '2e8e4b8c6d51bd5a9622',
-      redirectUri: window.location.origin
-    });
-
-    $authProvider.google({
-      url: '/auth/google',
-      clientId: '999928846531-1rgi7n93imidcduf6tunl2p847vjq6o5.apps.googleusercontent.com',
-      redirectUri: window.location.origin
-    });
-
+  .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     $urlRouterProvider.otherwise('/');
     $stateProvider
       .state('create', {
@@ -74,6 +39,12 @@ angular.module('lsync', [
         url: '/login',
         templateUrl: 'app/auth/login.html',
         controller: 'AuthController'
+      })
+      .state('logout', {
+        url: "/logout",
+        controller: function($scope, Auth) {
+          Auth.logout();
+        }
       })
       .state('main', {
         url: '/',
@@ -105,4 +76,29 @@ angular.module('lsync', [
         templateUrl: 'app/auth/register.html',
         controller: 'AuthController'
       });
+    $httpProvider.interceptors.push('AttachTokens');
+  })
+  .factory('AttachTokens', function($window) {
+    var attach = {
+      request: function(object) {
+        var jwt = $window.localStorage.getItem('com.nova');
+        if (jwt) {
+          object.headers['x-access-token'] = jwt;
+        }
+        object.headers['Allow-Control-Allow-Origin'] = '*';
+        return object;
+      }
+    };
+    return attach;
+  })
+  .run(function($rootScope, $state, Auth) {
+    $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
+      if (toState.name === 'login') {
+        return;
+      }
+      if (!Auth.isAuth() && toState.name !== 'register') {
+        evt.preventDefault();
+        $state.go('login');
+      }
+    });
   });
