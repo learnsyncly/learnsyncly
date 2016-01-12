@@ -85,9 +85,7 @@ angular.module('lsync.services', [])
       slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
       return true;
     };
-
-
-
+    
     slide.buildBaseUrl = function(resourceId){
       return 'https://docs.google.com/presentation/d/' + resourceId + '/embed?#slide=';
     };
