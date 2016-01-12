@@ -21,6 +21,27 @@ angular.module('lsync.services', [])
     //store app state data here
     return appState;
   })
+  .factory('PresentationState', function(AppState){
+   presentation={
+    timestamps:[15,30,45,60,75,90],
+    slides:[1,2,3,4,5,6]
+   };
+   var timeIndex=0;
+
+   presentation.checkTime = function(){ 
+      if(AppState.video.data.playing){
+        if(AppState.video.data.currentTime>=presentation.timestamps(timeIndex)){
+          AppState.video.pause();
+          AppState.toggleSlideView();
+          AppState.slide.next();
+
+        }
+      }
+    };
+   setInterval(presentaiton.checkTime, 500);
+
+   return presentation;
+  })
   .factory('Auth', function() {
     //store video state data here
     return {};
@@ -55,8 +76,8 @@ angular.module('lsync.services', [])
 
     //test data... TODO:remove later
     slide.data.aspectRatio = 'aspect16-9';
-    slide.data.length = 30;
-    slide.data.identifier = '1BrXgyVVKE02KvH8AcyHAs8KK-n1_mk3517uI5bXeOvw';
+    slide.data.length = 6;
+    slide.data.identifier = '1RXSpyU92LtugPzj9-IUnifwEl7Vy-wOztnsmekNVJ9g';
 
     //methods accessable from SlideState
     slide.setSlide = function(number) {
