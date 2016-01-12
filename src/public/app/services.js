@@ -1,6 +1,6 @@
 angular.module('lsync.services', [])
   .factory('AppState', function($interval, Auth, SlideState, VideoState, UserState, SocketState, PresentationState) {
-  
+
     appState = {};
     appState.slide = SlideState;
     appState.video = VideoState;
@@ -31,7 +31,7 @@ angular.module('lsync.services', [])
     };
     appState.checkTime = function(){
       if(appState.video.data.playing){
-        if(appState.video.data.currentTime>=appState.presentation.data.slideChanges[appState.presentation.data.timeIndex].timestamp){       
+        if(appState.video.data.currentTime>=appState.presentation.data.slideChanges[appState.presentation.data.timeIndex].timestamp){
           appState.presentation.data.timeIndex++;
           appState.toggleSlideView();
           appState.slide.setSlide(appState.presentation.data.slideChanges[appState.presentation.data.timeIndex].slide);
@@ -76,8 +76,6 @@ angular.module('lsync.services', [])
 
     ytPlayerInit = function(event) {
       video.data.videoReady = true;
-      video.seekTo(1);
-      video.data.playing=true;
       setInterval(updatePlayer, 1000);
     };
 
