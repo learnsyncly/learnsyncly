@@ -1,9 +1,10 @@
 angular.module('lsync.services', [])
-  .factory('AppState', function(Auth, SlideState, VideoState, UserState) {
+  .factory('AppState', function(Auth, SlideState, VideoState, UserState, PresentationState) {
     appState = {};
     appState.slide = SlideState;
     appState.video = VideoState;
     appState.user = UserState;
+    appState.presentation = PresentationState;
 
     //flyout status nested object for easy extending etc
     appState.data = {};
@@ -16,6 +17,11 @@ angular.module('lsync.services', [])
 
     appState.toggleSlideView = function(){
       appState.data.slideActive = !appState.data.slideActive;
+      if(appState.video.data.playing){
+        appState.video.pause();
+      }else{
+        appState.video.play();
+      }
     };
 
     //store app state data here
@@ -24,13 +30,16 @@ angular.module('lsync.services', [])
   .factory('PresentationState', function(AppState){
    presentation={
     timestamps:[15,30,45,60,75,90],
-    slides:[1,2,3,4,5,6]
+    slides:[1,2,3,4,5,6],
+    timeIndex:0;
    };
-   var timeIndex=0;
-
+   presentation.setTimeIndex = function(index){
+    presentation.timeIndex=index;
+   }
    presentation.checkTime = function(){ 
       if(AppState.video.data.playing){
-        if(AppState.video.data.currentTime>=presentation.timestamps(timeIndex)){
+        if(AppState.video.data.currentTime>=presentation.timestamps(presentation.timeIndex)){
+          presentation.timeIndex++;
           AppState.video.pause();
           AppState.toggleSlideView();
           AppState.slide.next();
@@ -67,7 +76,7 @@ angular.module('lsync.services', [])
     };
     return video;
   })
-  .factory('SlideState', function($rootScope, $sce) {
+  .factory('SlideState', function($rootScope, $sce, AppState) {
     //initial properties
     var slide = {};
 
@@ -94,6 +103,8 @@ angular.module('lsync.services', [])
         return false;
       }
       slide.data.slideNumber ++;
+      AppState.video.seekTo(AppState.presentation.timestamps[slide.data.slideNumber-1]);
+      AppState.presentation.setTimeIndex(slide.data.slideNumber);
       slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
       return true;
     };
@@ -103,6 +114,8 @@ angular.module('lsync.services', [])
         return false;
       }
       slide.data.slideNumber --;
+      AppState.video.seekTo(AppState.presentation.timestamps[slide.data.slideNumber-1]);
+      AppState.presentation.setTimeIndex(slide.data.slideNumber);
       slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
       return true;
     };
