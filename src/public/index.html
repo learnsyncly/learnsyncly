@@ -12,13 +12,28 @@
 </head>
 
 <body>
-  <div id="lsyncViewWrap" data-ui-view>
 
-  </div>
+  <div id="lsyncViewWrap" data-ui-view></div>
+
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="lib/allLibs.js"></script>
   <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+  <script>
+    var player;
+    var tag = document.createElement('script');
+    tag.src = "//www.youtube.com/player_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    //global function for youtube on load
+    function onYouTubePlayerAPIReady() {
+      player = new YT.Player('mainVideoFrame', {
+        events: {
+          'onReady': ytPlayerInit
+        }
+      });
+    }
+  </script>
 </body>
 
 </html>
