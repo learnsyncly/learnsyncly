@@ -127,7 +127,7 @@ body {
   z-index:10;
   top:0;
   right:0;
-  padding-top:3.625em;
+  padding:5.625em 2em 2em 2em;
   transition: width .5s;
 }
 
