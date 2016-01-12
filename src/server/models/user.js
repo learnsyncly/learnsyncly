@@ -5,7 +5,8 @@ var config = require('../config');
 
 var userSchema = new Schema({
   username: {
-    type: String
+    type: String,
+    required: true
   },
   email: {
     type: String,
