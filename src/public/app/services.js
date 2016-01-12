@@ -31,11 +31,11 @@ angular.module('lsync.services', [])
    presentation={
     timestamps:[15,30,45,60,75,90],
     slides:[1,2,3,4,5,6],
-    timeIndex:0
+    timeIndex:0;
    };
    presentation.setTimeIndex = function(index){
     presentation.timeIndex=index;
-   };
+   }
    presentation.checkTime = function(){ 
       if(AppState.video.data.playing){
         if(AppState.video.data.currentTime>=presentation.timestamps(presentation.timeIndex)){
@@ -126,7 +126,7 @@ angular.module('lsync.services', [])
       slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
       return true;
     };
-  
+    
     slide.buildBaseUrl = function(resourceId){
       return 'https://docs.google.com/presentation/d/' + resourceId + '/embed?#slide=';
     };
