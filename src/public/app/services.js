@@ -1,5 +1,5 @@
 angular.module('lsync.services', [])
-    .factory('AppState', function(Auth, SlideState, VideoState, UserState, UserState) {
+    .factory('AppState', function(Auth, SlideState, VideoState, UserState, SocketState) {
     appState = {};
     appState.slide = SlideState;
     appState.video = VideoState;
@@ -36,8 +36,12 @@ angular.module('lsync.services', [])
     socket.socket = false;
     socket.connect = function () {
       socket.socket = io();
+      socket.socket.on('connect', function () {
+	console.log('Connected to Server.');
+      });
     };
-    return {};
+    //socket.connect();
+    return socket;
   })
   .factory('VideoState', function($rootScope) {
     var video={};
