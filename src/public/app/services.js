@@ -9,7 +9,6 @@ angular.module('lsync.services', [])
     appState.presentation = PresentationState;
     //flyout status nested object for easy extending etc
     appState.data = {};
-    appState.data.player = false;
     appState.data.flyoutActive = false;
     appState.data.slideActive = false;
 
@@ -65,6 +64,9 @@ angular.module('lsync.services', [])
     return socket;
   })
   .factory('VideoState', function($sce) {
+    // on youtube init this will be populated with our player
+    var videoPlayer;
+    //object for video access in app
     var video = {};
     video.data = {};
     video.data.videoReady = false;
@@ -75,12 +77,19 @@ angular.module('lsync.services', [])
     video.data.url = '';
 
     ytPlayerInit = function(event) {
+      //set our video player and remove global access
+      videoPlayer = youTubePlayer;
+      //clean up youtube globals to avoid outside access
+      youTubePlayer = undefined;
+      youTubeApiTag = undefined;
+      youTubeApiFirstTag = undefined;
+      //init player variables and auto update timestamps
       video.data.videoReady = true;
       setInterval(updatePlayer, 1000);
     };
 
     var updatePlayer = function() {
-      video.data.currentTime = player.getCurrentTime();
+      video.data.currentTime = videoPlayer.getCurrentTime();
     };
 
     video.play = function() {
@@ -88,7 +97,7 @@ angular.module('lsync.services', [])
         return false;
       }
       video.data.playing = true;
-      player.playVideo();
+      videoPlayer.playVideo();
       return true;
     };
 
@@ -97,7 +106,7 @@ angular.module('lsync.services', [])
         return false;
       }
       video.data.playing = false;
-      player.pauseVideo();
+      videoPlayer.pauseVideo();
       return true;
     };
 
@@ -105,7 +114,7 @@ angular.module('lsync.services', [])
       if (typeof number !== 'number' || !video.data.videoReady) {
         return false;
       }
-      player.seekTo(number, true);
+      videoPlayer.seekTo(number, true);
       return true;
     };
 
