@@ -38,6 +38,8 @@ angular.module('lsync.video', ['lsync.services'])
         player = new YT.Player(element.children()[0], {
           playerVars: {
             autoplay: 0,
+            height: '100%',
+            width: '100%',
             theme: "dark",
             color: "white",
             iv_load_policy: 3,
