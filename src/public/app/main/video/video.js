@@ -1,14 +1,10 @@
 angular.module('lsync.video', ['lsync.services'])
-.controller('VideoController', function($scope,VideoState){
-  angular.extend($scope,VideoState);
-  $scope.playerEvent = function(event){
-    var data = Array.prototype.slice.apply(arguments, 1);
-    this.$broadcast(event,data);
-  };
-
+.controller('VideoController', function($scope,AppState){
+  angular.extend($scope,AppState);
+  
   $scope.url='https://www.youtube.com/watch?v=lBqiZSemrqg&ab_channel=TimKindberg';
   $scope.$on('updateTime', function (event, data) {
-    console.log(data);
+    AppState.video.setTime(data);
   });
 
   $scope.data={
