@@ -26,7 +26,7 @@ angular.module('lsync', [
     'lsync.video',
     'lsync.services',
     'lsync.toolbar'
-  ])
+ ])
   .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
     $stateProvider
