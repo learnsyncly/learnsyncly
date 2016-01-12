@@ -9,7 +9,7 @@ require('./create/create.js');
 require('./main/main.js');
 require('./main/slide/slide.js');
 require('./main/video/video.js');
-require('./main/flyout/flygout.js');
+require('./main/flyout/flyout.js');
 require('./main/toolbar/toolbar.js');
 require('./services.js');
 
@@ -30,6 +30,27 @@ angular.module('lsync', [
     'lsync.toolbar'
   ])
   .config(function($stateProvider, $urlRouterProvider, $authProvider) {
+
+    function skipIfLoggedIn($q, $auth) {
+      var deferred = $q.defer();
+      if ($auth.isAuthenticated()) {
+        deferred.reject();
+      } else {
+        deferred.resolve();
+      }
+      return deferred.promise;
+    }
+
+    function loginRequired($q, $location, $auth) {
+      var deferred = $q.defer();
+      if ($auth.isAuthenticated()) {
+        deferred.resolve();
+      } else {
+        $location.path('/login');
+      }
+      return deferred.promise;
+    }
+
     $authProvider.google({
       clientId: '999928846531-1rgi7n93imidcduf6tunl2p847vjq6o5.apps.googleusercontent.com'
     });
@@ -39,15 +60,15 @@ angular.module('lsync', [
       .state('create', {
         url: '/create',
         templateUrl: 'app/create/create.html',
-        controller: 'CreateController',
-        resolve: {
-          loggedin: checkLoggedin
-        }
+        controller: 'CreateController'
       })
       .state('login', {
         url: '/login',
         templateUrl: 'app/auth/login.html',
-        controller: 'AuthController'
+        controller: 'AuthController',
+        resolve: {
+          skipIfLoggedIn: skipIfLoggedIn
+        }
       })
       .state('main', {
         url: '/',
@@ -72,14 +93,14 @@ angular.module('lsync', [
             templateUrl: 'app/main/video/video.html',
             controller: 'VideoController'
           }
-        },
-        resolve: {
-          loggedin: checkLoggedin
         }
       })
       .state('register', {
         url: '/register',
         templateUrl: 'app/auth/register.html',
-        controller: 'AuthController'
+        controller: 'AuthController',
+        resolve: {
+          skipIfLoggedIn: skipIfLoggedIn
+        }
       });
   });
