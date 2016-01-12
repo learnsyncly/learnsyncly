@@ -85,6 +85,7 @@ angular.module('lsync.services', [])
       youTubeApiFirstTag = undefined;
       //init player variables and auto update timestamps
       video.data.videoReady = true;
+      video.data.unPlayed = true;
       setInterval(updatePlayer, 1000);
     };
 
@@ -95,10 +96,16 @@ angular.module('lsync.services', [])
     video.play = function() {
       if (!video.data.videoReady) {
         return false;
+      }else if(video.data.unPlayed){
+        video.data.unPlayed=false;
+        video.seekTo(1);
+        video.data.playing = true;
+        return true;
+      }else{
+        video.data.playing = true;
+        videoPlayer.playVideo();
+        return true;
       }
-      video.data.playing = true;
-      videoPlayer.playVideo();
-      return true;
     };
 
     video.pause = function() {
