@@ -1,10 +1,11 @@
 angular.module('lsync.services', [])
-  .factory('AppState', function(Auth, SlideState, VideoState, UserState) {
+    .factory('AppState', function(Auth, SlideState, VideoState, UserState, UserState) {
     appState = {};
     appState.slide = SlideState;
     appState.video = VideoState;
     appState.user = UserState;
-
+    appState.socket = SocketState;
+    
     //flyout status nested object for easy extending etc
     appState.data = {};
     appState.data.flyoutActive = false;
@@ -27,6 +28,15 @@ angular.module('lsync.services', [])
   })
   .factory('UserState', function() {
     //store video state data here
+    return {};
+  })
+  .factory('SocketState', function() {
+    //store socket state data here
+    var socket = {};
+    socket.socket = false;
+    socket.connect = function () {
+      socket.socket = io();
+    };
     return {};
   })
   .factory('VideoState', function($rootScope) {
