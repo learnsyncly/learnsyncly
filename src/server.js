@@ -1,6 +1,11 @@
+var config = require('./server/config.js');
 var express = require('express');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 var SocketServer = require('socket.io');
 var socketController = require('./server/socketController.js');
+
 //new express app
 var app = express();
 
@@ -11,6 +16,25 @@ var port = process.env.PORT || 3000;
 var httpServer = app.listen(port, function() {
   console.log('Listening on', port);
 });
+
+
+// *** config middleware *** //
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+// *** mongoose *** //
+mongoose.connect(config.MONGO_URI);
+mongoose.connection.on('error', function(err) {
+  console.log('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
+});
+
+// *** routes *** //
+var authRoutes = require('./server/routes/auth');
+
+// *** main routes *** //
+app.use('/auth', authRoutes);
+
 
 // use https when deployed to heroku
 // note headers can be spoofed so this isn't very reliable
