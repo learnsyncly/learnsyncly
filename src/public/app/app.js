@@ -3,12 +3,13 @@
 //angular dependencies
 require('angular');
 require('angular-ui-router');
+require('satellizer');
 require('./auth/auth.js');
 require('./create/create.js');
 require('./main/main.js');
 require('./main/slide/slide.js');
 require('./main/video/video.js');
-require('./main/flyout/flyout.js');
+require('./main/flyout/flygout.js');
 require('./main/toolbar/toolbar.js');
 require('./services.js');
 
@@ -19,6 +20,7 @@ require('../../../node_modules/socket.io-client/socket.io.js');
 angular.module('lsync', [
     'ui.router',
     'lsync.auth',
+    'satellizer',
     'lsync.create',
     'lsync.main',
     'lsync.flyout',
@@ -26,14 +28,21 @@ angular.module('lsync', [
     'lsync.video',
     'lsync.services',
     'lsync.toolbar'
- ])
-  .config(function($stateProvider, $urlRouterProvider) {
+  ])
+  .config(function($stateProvider, $urlRouterProvider, $authProvider) {
+    $authProvider.google({
+      clientId: '999928846531-1rgi7n93imidcduf6tunl2p847vjq6o5.apps.googleusercontent.com'
+    });
+
     $urlRouterProvider.otherwise('/');
     $stateProvider
       .state('create', {
         url: '/create',
         templateUrl: 'app/create/create.html',
-        controller: 'CreateController'
+        controller: 'CreateController',
+        resolve: {
+          loggedin: checkLoggedin
+        }
       })
       .state('login', {
         url: '/login',
@@ -63,6 +72,9 @@ angular.module('lsync', [
             templateUrl: 'app/main/video/video.html',
             controller: 'VideoController'
           }
+        },
+        resolve: {
+          loggedin: checkLoggedin
         }
       })
       .state('register', {

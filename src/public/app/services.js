@@ -54,9 +54,9 @@ angular.module('lsync.services', [])
     //store socket state data here
     var socket = {};
     socket.socket = false;
-    socket.connect = function () {
+    socket.connect = function() {
       socket.socket = io();
-      socket.socket.on('connect', function () {
+      socket.socket.on('connect', function() {
         console.log('Connected to Server.');
       });
     };

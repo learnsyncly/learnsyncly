@@ -2,9 +2,9 @@
   <div class="row">
     <div class="col s6 offset-s3">
       <h1>login</h1>
-      <form name="loginForm" ng-controller="AuthController" ng-submit="login(credentials)" novalidate>
-        <input type="text" ng-model="credentials.username" required>
-        <input type="password" ng-model="credentials.password" required>
+      <form name="loginForm" ng-controller="AuthController" ng-submit="login('google')" novalidate>
+        <input type="text" id="username" ng-model="credentials.username" required>
+        <input type="password" id="password" ng-model="credentials.password" required>
         <button>login</button>
       </form>
       <a href="#/register">Don't have an account? <strong>Register</strong> ...</a>
