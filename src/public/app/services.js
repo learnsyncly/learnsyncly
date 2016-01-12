@@ -18,6 +18,11 @@ angular.module('lsync.services', [])
 
     appState.toggleSlideView = function() {
       appState.data.slideActive = !appState.data.slideActive;
+      if (appState.video.data.playing) {
+        appState.video.pause();
+      } else {
+        appState.video.play();
+      }
     };
 
     //store app state data here
@@ -91,6 +96,7 @@ angular.module('lsync.services', [])
       if (!video.data.videoReady) {
         return false;
       }
+      video.data.playing = true;
       player.playVideo();
       return true;
     };
@@ -99,6 +105,7 @@ angular.module('lsync.services', [])
       if (!video.data.videoReady) {
         return false;
       }
+      video.data.playing = false;
       player.pauseVideo();
       return true;
     };
