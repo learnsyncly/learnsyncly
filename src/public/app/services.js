@@ -1,10 +1,10 @@
 angular.module('lsync.services', [])
-  .factory('AppState', function(Auth, SlideState, VideoState, UserState, PresentationState) {
+  .factory('AppState', function(Auth, SlideState, VideoState, UserState) {
     appState = {};
     appState.slide = SlideState;
     appState.video = VideoState;
     appState.user = UserState;
-    appState.presentation = PresentationState;
+ 
 
     //flyout status nested object for easy extending etc
     appState.data = {};
@@ -65,18 +65,25 @@ angular.module('lsync.services', [])
       videoid:'',
       curretTime:0
     };
+    video.playerEvent = function(event){
+      var data = Array.prototype.slice.apply(arguments, 1);
+      this.$broadcast(event,data);
+    };
     video.play = function(){
-
+      video.playerEvent('play');
     };
     video.pause = function(){
-
+      video.playerEvent('pause');
     };
-    video.seekTo = function(){
-
+    video.seekTo = function(number){
+      video.playerEvent('seekTo', number);
+    };
+    video.setTime = function(time){
+      video.data.curretTime=time;
     };
     return video;
   })
-  .factory('SlideState', function($rootScope, $sce, AppState) {
+  .factory('SlideState', function($rootScope, $sce, VideoState, PresentationState) {
     //initial properties
     var slide = {};
 
@@ -103,8 +110,8 @@ angular.module('lsync.services', [])
         return false;
       }
       slide.data.slideNumber ++;
-      AppState.video.seekTo(AppState.presentation.timestamps[slide.data.slideNumber-1]);
-      AppState.presentation.setTimeIndex(slide.data.slideNumber);
+      VideoState.seekTo(PresentationState.presentation.timestamps[slide.data.slideNumber-1]);
+      PresentationState.presentation.setTimeIndex(slide.data.slideNumber);
       slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
       return true;
     };
@@ -114,8 +121,8 @@ angular.module('lsync.services', [])
         return false;
       }
       slide.data.slideNumber --;
-      AppState.video.seekTo(AppState.presentation.timestamps[slide.data.slideNumber-1]);
-      AppState.presentation.setTimeIndex(slide.data.slideNumber);
+      VideoState.seekTo(PresentationState.presentation.timestamps[slide.data.slideNumber-1]);
+      PresentationState.presentation.setTimeIndex(slide.data.slideNumber);
       slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
       return true;
     };
