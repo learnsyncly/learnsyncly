@@ -31,10 +31,10 @@ angular.module('lsync.services', [])
     };
     appState.checkTime = function(){
       if(appState.video.data.playing){
-        if(appState.video.data.currentTime>=appState.presentation.data.timestamps[appState.presentation.data.timeIndex]){       
+        if(appState.video.data.currentTime>=appState.presentation.data.slideChanges[appState.presentation.data.timeIndex].timestamp){       
           appState.presentation.data.timeIndex++;
           appState.toggleSlideView();
-          appState.slide.setSlide(appState.presentation.data.timeIndex);
+          appState.slide.setSlide(appState.presentation.data.slideChanges[appState.presentation.data.timeIndex].slide);
         }
       }
     };
@@ -43,19 +43,7 @@ angular.module('lsync.services', [])
     //store app state data here
     return appState;
   })
-.factory('PresentationState', function(){
- presentation={};
- presentation.data={
-  timestamps:[5,10,15,20,25,30,35,40,45,50,55,60],
-  // timestamps:[15,30,45,60,75,90],
-  slides:[1,2,3,4,5,6],
-  timeIndex:1
- };
-
-
- return presentation;
-})
-  .factory('Auth', function() {
+.factory('Auth', function() {
     //store video state data here
     return {};
   })
@@ -190,4 +178,51 @@ angular.module('lsync.services', [])
   };
 
   return slide;
+})
+.factory('PresentationState', function(){
+ presentation={};
+ presentation.data={
+  slideChanges:[
+    {
+      timestamp:5,
+      slide:1
+    },
+    {
+      timestamp:10,
+      slide:3
+    },
+    {
+      timestamp:15,
+      slide:5
+    },
+    {
+      timestamp:20,
+      slide:6
+    },
+    {
+      timestamp:25,
+      slide:2
+    },
+    {
+      timestamp:30,
+      slide:8
+    },
+    {
+      timestamp:35,
+      slide:4
+    },
+    {
+      timestamp:40,
+      slide:5
+    },
+    {
+      timestamp:45,
+      slide:25
+    }
+  ],
+  timeIndex:1
+ };
+
+
+ return presentation;
 });
