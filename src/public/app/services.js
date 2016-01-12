@@ -1,11 +1,12 @@
 angular.module('lsync.services', [])
-  .factory('AppState', function(Auth, SlideState, VideoState, UserState, SocketState) {
-
+  .factory('AppState', function($interval, Auth, SlideState, VideoState, UserState, SocketState, PresentationState) {
+  
     appState = {};
     appState.slide = SlideState;
     appState.video = VideoState;
     appState.user = UserState;
     appState.socket = SocketState;
+    appState.presentation = PresentationState;
     //flyout status nested object for easy extending etc
     appState.data = {};
     appState.data.player = false;
@@ -25,33 +26,35 @@ angular.module('lsync.services', [])
       }
     };
 
+    appState.setTimeIndex = function(index){
+      appState.presentation.data.timeIndex=index;
+    };
+    appState.checkTime = function(){
+      if(appState.video.data.playing){
+        if(appState.video.data.currentTime>=appState.presentation.data.timestamps[appState.presentation.data.timeIndex]){       
+          appState.presentation.data.timeIndex++;
+          appState.toggleSlideView();
+          appState.slide.setSlide(appState.presentation.data.timeIndex);
+        }
+      }
+    };
+    setInterval(appState.checkTime, 500);
+
     //store app state data here
     return appState;
   })
-// .factory('PresentationState', function(AppState){
-//  presentation={
-//   timestamps:[15,30,45,60,75,90],
-//   slides:[1,2,3,4,5,6],
-//   timeIndex:0
-//  };
-//  presentation.setTimeIndex = function(index){
-//   presentation.timeIndex=index;
-//  };
-//  presentation.checkTime = function(){
-//     if(AppState.video.data.playing){
-//       if(AppState.video.data.currentTime>=presentation.timestamps(presentation.timeIndex)){
-//         presentation.timeIndex++;
-//         AppState.video.pause();
-//         AppState.toggleSlideView();
-//         AppState.slide.next();
+.factory('PresentationState', function(){
+ presentation={};
+ presentation.data={
+  timestamps:[5,10,15,20,25,30,35,40,45,50,55,60],
+  // timestamps:[15,30,45,60,75,90],
+  slides:[1,2,3,4,5,6],
+  timeIndex:1
+ };
 
-//       }
-//     }
-//   };
-//  setInterval(presentaiton.checkTime, 500);
 
-//  return presentation;
-// })
+ return presentation;
+})
   .factory('Auth', function() {
     //store video state data here
     return {};
@@ -85,6 +88,8 @@ angular.module('lsync.services', [])
 
     ytPlayerInit = function(event) {
       video.data.videoReady = true;
+      video.seekTo(1);
+      video.data.playing=true;
       setInterval(updatePlayer, 1000);
     };
 
