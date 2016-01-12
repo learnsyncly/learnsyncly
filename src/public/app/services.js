@@ -25,12 +25,12 @@ angular.module('lsync.services', [])
       }
     };
 
-    appState.setTimeIndex = function(index){
-      appState.presentation.data.timeIndex=index;
+    appState.setTimeIndex = function(index) {
+      appState.presentation.data.timeIndex = index;
     };
-    appState.checkTime = function(){
-      if(appState.video.data.playing){
-        if(appState.video.data.currentTime>=appState.presentation.data.slideChanges[appState.presentation.data.timeIndex].timestamp){
+    appState.checkTime = function() {
+      if (appState.video.data.playing) {
+        if (appState.video.data.currentTime >= appState.presentation.data.slideChanges[appState.presentation.data.timeIndex].timestamp) {
           appState.presentation.data.timeIndex++;
           appState.toggleSlideView();
           appState.slide.setSlide(appState.presentation.data.slideChanges[appState.presentation.data.timeIndex].slide);
@@ -42,9 +42,48 @@ angular.module('lsync.services', [])
     //store app state data here
     return appState;
   })
-.factory('Auth', function() {
-    //store video state data here
-    return {};
+  .factory('Auth', function($http, $rootScope, $state, $window) {
+    var login = function(user) {
+      return $http({
+          method: 'POST',
+          url: '/api/login',
+          data: user
+        })
+        .then(function(resp) {
+          return resp.data.token;
+        });
+    };
+
+    var register = function(user) {
+      return $http({
+          method: 'POST',
+          url: '/api/register',
+          data: user
+        })
+        .then(function(resp) {
+          return resp.data.token;
+        })
+        .catch(function(err) {
+          $state.go('register');
+        });
+    };
+
+    var logout = function() {
+      $rootScope.hasAuth = false;
+      $window.localStorage.removeItem('com.lsyncly');
+      $state.go('login');
+    };
+
+    var isAuth = function() {
+      return !!$window.localStorage.getItem('com.lsyncly');
+    };
+
+    return {
+      login: login,
+      register: register,
+      logout: logout,
+      isAuth: isAuth
+    };
   })
   .factory('UserState', function() {
     //store video state data here
@@ -54,9 +93,9 @@ angular.module('lsync.services', [])
     //store socket state data here
     var socket = {};
     socket.socket = false;
-    socket.connect = function () {
+    socket.connect = function() {
       socket.socket = io();
-      socket.socket.on('connect', function () {
+      socket.socket.on('connect', function() {
         console.log('Connected to Server.');
       });
     };
@@ -134,102 +173,92 @@ angular.module('lsync.services', [])
 
 
 .factory('SlideState', function($rootScope, $sce) {
-  //initial properties
-  var slide = {};
+    //initial properties
+    var slide = {};
 
-  //data object to help namespace scope when extended on controller
-  slide.data = {};
+    //data object to help namespace scope when extended on controller
+    slide.data = {};
 
-  //test data... TODO:remove later
-  slide.data.aspectRatio = 'aspect16-9';
-  slide.data.length = 30;
-  slide.data.identifier = '1BrXgyVVKE02KvH8AcyHAs8KK-n1_mk3517uI5bXeOvw';
+    //test data... TODO:remove later
+    slide.data.aspectRatio = 'aspect16-9';
+    slide.data.length = 30;
+    slide.data.identifier = '1BrXgyVVKE02KvH8AcyHAs8KK-n1_mk3517uI5bXeOvw';
 
-  //methods accessable from SlideState
-  slide.setSlide = function(number) {
-    if (number > slide.data.length) {
-      return false;
-    }
-    slide.data.slideNumber = number;
-    slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
-    return true;
-  };
+    //methods accessable from SlideState
+    slide.setSlide = function(number) {
+      if (number > slide.data.length) {
+        return false;
+      }
+      slide.data.slideNumber = number;
+      slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
+      return true;
+    };
 
-  slide.next = function() {
-    if (slide.data.slideNumber + 1 > slide.data.length) {
-      return false;
-    }
-    slide.data.slideNumber++;
-    slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
-    return true;
-  };
+    slide.next = function() {
+      if (slide.data.slideNumber + 1 > slide.data.length) {
+        return false;
+      }
+      slide.data.slideNumber++;
+      slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
+      return true;
+    };
 
-  slide.prev = function() {
-    if (slide.data.slideNumber - 1 < 0) {
-      return false;
-    }
-    slide.data.slideNumber--;
-    slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
-    return true;
-  };
+    slide.prev = function() {
+      if (slide.data.slideNumber - 1 < 0) {
+        return false;
+      }
+      slide.data.slideNumber--;
+      slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
+      return true;
+    };
 
-  slide.buildBaseUrl = function(resourceId) {
-    return 'https://docs.google.com/presentation/d/' + resourceId + '/embed?#slide=';
-  };
+    slide.buildBaseUrl = function(resourceId) {
+      return 'https://docs.google.com/presentation/d/' + resourceId + '/embed?#slide=';
+    };
 
-  slide.init = function() {
-    //initial settings on setup
-    slide.data.baseUrl = slide.buildBaseUrl(slide.data.identifier);
-    slide.data.slideNumber = 0;
-    slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
-  };
+    slide.init = function() {
+      //initial settings on setup
+      slide.data.baseUrl = slide.buildBaseUrl(slide.data.identifier);
+      slide.data.slideNumber = 0;
+      slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
+    };
 
-  return slide;
-})
-.factory('PresentationState', function(){
- presentation={};
- presentation.data={
-  slideChanges:[
-    {
-      timestamp:5,
-      slide:1
-    },
-    {
-      timestamp:10,
-      slide:3
-    },
-    {
-      timestamp:15,
-      slide:5
-    },
-    {
-      timestamp:20,
-      slide:6
-    },
-    {
-      timestamp:25,
-      slide:2
-    },
-    {
-      timestamp:30,
-      slide:8
-    },
-    {
-      timestamp:35,
-      slide:4
-    },
-    {
-      timestamp:40,
-      slide:5
-    },
-    {
-      timestamp:45,
-      slide:25
-    }
-  ],
-  timeIndex:1
- };
+    return slide;
+  })
+  .factory('PresentationState', function() {
+    presentation = {};
+    presentation.data = {
+      slideChanges: [{
+        timestamp: 5,
+        slide: 1
+      }, {
+        timestamp: 10,
+        slide: 3
+      }, {
+        timestamp: 15,
+        slide: 5
+      }, {
+        timestamp: 20,
+        slide: 6
+      }, {
+        timestamp: 25,
+        slide: 2
+      }, {
+        timestamp: 30,
+        slide: 8
+      }, {
+        timestamp: 35,
+        slide: 4
+      }, {
+        timestamp: 40,
+        slide: 5
+      }, {
+        timestamp: 45,
+        slide: 25
+      }],
+      timeIndex: 1
+    };
 
 
- return presentation;
-});
+    return presentation;
+  });
