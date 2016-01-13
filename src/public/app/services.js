@@ -28,16 +28,17 @@ angular.module('lsync.services', [])
     appState.setTimeIndex = function(index) {
       appState.presentation.data.timeIndex = index;
     };
+
     appState.checkTime = function() {
       if (appState.video.data.playing) {
         if (appState.video.data.currentTime >= appState.presentation.data.slideChanges[appState.presentation.data.timeIndex].timestamp) {
           appState.presentation.data.timeIndex++;
-          appState.toggleSlideView();
           appState.slide.setSlide(appState.presentation.data.slideChanges[appState.presentation.data.timeIndex].slide);
+          return true;
         }
       }
+      return false;
     };
-    setInterval(appState.checkTime, 500);
 
     //store app state data here
     return appState;
