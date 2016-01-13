@@ -113,7 +113,7 @@ angular.module('lsync.services', [])
     video.data.playing = false;
     video.data.currentTime = 0;
     video.data.aspectRatio = 'aspect16-9';
-    video.data.identifier = 'M7lc1UVf-VE';
+    video.data.identifier = 'wyzi9GNZFMU';
     video.data.url = '';
 
     ytPlayerInit = function(event) {
@@ -190,7 +190,7 @@ angular.module('lsync.services', [])
     //test data... TODO:remove later
     slide.data.aspectRatio = 'aspect16-9';
     slide.data.length = 30;
-    slide.data.identifier = '1BrXgyVVKE02KvH8AcyHAs8KK-n1_mk3517uI5bXeOvw';
+    slide.data.identifier = '1RXSpyU92LtugPzj9-IUnifwEl7Vy-wOztnsmekNVJ9g';
 
     //methods accessable from SlideState
     slide.setSlide = function(number) {
