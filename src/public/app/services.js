@@ -1,39 +1,52 @@
 angular.module('lsync.services', [])
-  .factory('AppState', function($interval, Auth, SlideState, VideoState, UserState, SocketState, PresentationState) {
+  .factory('AppState', function($interval, Auth, SlideState, VideoState, UserState, SocketState, PresState) {
 
     appState = {};
     appState.slide = SlideState;
     appState.video = VideoState;
     appState.user = UserState;
     appState.socket = SocketState;
-    appState.presentation = PresentationState;
+    appState.pres = PresState;
     //flyout status nested object for easy extending etc
     appState.data = {};
     appState.data.flyoutActive = false;
     appState.data.slideActive = false;
+    appState.data.containerAspect = false;
+
+    appState.init = function(){
+      var vidAspect = VideoState.data.aspectRatio;
+      var slideAspect = SlideState.data.aspectRatio;
+      if(vidAspect === 'aspect4-3' || slideAspect === 'aspect4-3'){
+        appState.data.containerAspect = 'aspect4-3';
+      } else if(vidAspect === 'aspect16-10' || slideAspect === 'aspect16-10'){
+        appState.data.containerAspect = 'aspect16-10';
+      } else {
+        appState.data.containerAspect = 'aspect16-9';
+      }
+    };
 
     appState.toggleFlyout = function() {
       appState.data.flyoutActive = !appState.data.flyoutActive;
     };
 
     appState.toggleSlideView = function() {
-      appState.data.slideActive = !appState.data.slideActive;
-      if (appState.video.data.playing) {
+      if (appState.video.data.playing && !appState.data.slideActive) {
         appState.video.pause();
-      } else {
+      } else if (appState.data.slideActive) {
         appState.video.play();
       }
+      appState.data.slideActive = !appState.data.slideActive;
     };
 
     appState.setTimeIndex = function(index) {
-      appState.presentation.data.timeIndex = index;
+      appState.pres.data.timeIndex = index;
     };
 
     appState.checkTime = function() {
       if (appState.video.data.playing) {
-        if (appState.video.data.currentTime >= appState.presentation.data.slideChanges[appState.presentation.data.timeIndex].timestamp) {
-          appState.presentation.data.timeIndex++;
-          appState.slide.setSlide(appState.presentation.data.slideChanges[appState.presentation.data.timeIndex].slide);
+        if (appState.video.data.currentTime >= appState.pres.data.slideChanges[appState.pres.data.timeIndex].timestamp) {
+          appState.pres.data.timeIndex++;
+          appState.slide.setSlide(appState.pres.data.slideChanges[appState.pres.data.timeIndex].slide);
           return true;
         }
       }
@@ -157,6 +170,18 @@ angular.module('lsync.services', [])
       return true;
     };
 
+    video.toggle = function() {
+      if (!video.data.videoReady) {
+        return false;
+      } else if(video.data.playing){
+        video.pause();
+        return true;
+      }else{
+        video.play();
+        return true;
+      }
+    };
+
     video.seekTo = function(number) {
       if (typeof number !== 'number' || !video.data.videoReady) {
         return false;
@@ -189,7 +214,7 @@ angular.module('lsync.services', [])
 
     //test data... TODO:remove later
     slide.data.aspectRatio = 'aspect16-9';
-    slide.data.length = 30;
+    slide.data.length = 7;
     slide.data.identifier = '1RXSpyU92LtugPzj9-IUnifwEl7Vy-wOztnsmekNVJ9g';
 
     //methods accessable from SlideState
@@ -212,7 +237,7 @@ angular.module('lsync.services', [])
     };
 
     slide.prev = function() {
-      if (slide.data.slideNumber - 1 < 0) {
+      if (slide.data.slideNumber - 1 < 1) {
         return false;
       }
       slide.data.slideNumber--;
@@ -227,13 +252,13 @@ angular.module('lsync.services', [])
     slide.init = function() {
       //initial settings on setup
       slide.data.baseUrl = slide.buildBaseUrl(slide.data.identifier);
-      slide.data.slideNumber = 0;
+      slide.data.slideNumber = 1;
       slide.data.url = $sce.trustAsResourceUrl(slide.data.baseUrl + slide.data.slideNumber);
     };
 
     return slide;
   })
-  .factory('PresentationState', function() {
+  .factory('PresState', function() {
     presentation = {};
     presentation.data = {
       slideChanges: [{
@@ -241,28 +266,22 @@ angular.module('lsync.services', [])
         slide: 1
       }, {
         timestamp: 10,
-        slide: 3
-      }, {
-        timestamp: 15,
-        slide: 5
-      }, {
-        timestamp: 20,
-        slide: 6
-      }, {
-        timestamp: 25,
         slide: 2
       }, {
-        timestamp: 30,
-        slide: 8
+        timestamp: 15,
+        slide: 3
       }, {
-        timestamp: 35,
+        timestamp: 20,
         slide: 4
       }, {
-        timestamp: 40,
+        timestamp: 25,
         slide: 5
       }, {
-        timestamp: 45,
-        slide: 25
+        timestamp: 30,
+        slide: 6
+      }, {
+        timestamp: 35,
+        slide: 7
       }],
       timeIndex: 1
     };

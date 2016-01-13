@@ -15,6 +15,7 @@ body {
 #lsyncViewWrap {
   overflow:hidden;
   width:100%;
+  height:100%;
 }
 
 .floatRight,
@@ -34,11 +35,7 @@ body {
 /**************************************************/
 #mainToolbar {
   background-color:#494A4C;
-  position:absolute;
-  top:0;
-  left:0;
   width:100%;
-  z-index:50;
 }
 
 #mainToolbar .row {
@@ -97,6 +94,12 @@ body {
 
 .slideWrap.noControls .aspectEmbedContainer {
   margin-bottom:-30px;
+  padding-bottom:30px;
+}
+
+#flyoutViewWrap{
+  padding:0;
+  margin:0;
 }
 
 #flyout {
@@ -123,23 +126,16 @@ body {
   height:100%;
 }
 
-#flyoutMenuButton {
+#mainPresentaion {
   float:right;
-}
-
-#mainPresentaionWrap{
-  position:absolute;
-  height:100%;
-  width:100%;
-  z-index:10;
-  top:0;
-  right:0;
-  padding:5.625em 2em 2em 2em;
   transition: width .5s;
 }
 
-.flyoutActive #mainPresentaionWrap{
-  width:60%;
+#mainPresentaionWrap{
+  position:relative;
+  float:right;
+  width:100%;
+  z-index:10;
 }
 
 #mainSlideWrap {
