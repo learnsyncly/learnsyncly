@@ -12,13 +12,14 @@ angular.module('lsync.services', [])
     appState.data.flyoutActive = false;
     appState.data.slideActive = false;
     appState.data.containerAspect = false;
+    appState.data.autoTransition = true;
 
-    appState.init = function(){
+    appState.init = function() {
       var vidAspect = VideoState.data.aspectRatio;
       var slideAspect = SlideState.data.aspectRatio;
-      if(vidAspect === 'aspect4-3' || slideAspect === 'aspect4-3'){
+      if (vidAspect === 'aspect4-3' || slideAspect === 'aspect4-3') {
         appState.data.containerAspect = 'aspect4-3';
-      } else if(vidAspect === 'aspect16-10' || slideAspect === 'aspect16-10'){
+      } else if (vidAspect === 'aspect16-10' || slideAspect === 'aspect16-10') {
         appState.data.containerAspect = 'aspect16-10';
       } else {
         appState.data.containerAspect = 'aspect16-9';
@@ -30,10 +31,25 @@ angular.module('lsync.services', [])
     };
 
     appState.toggleSlideView = function() {
-      if (appState.video.data.playing && !appState.data.slideActive) {
-        appState.video.pause();
-      } else if (appState.data.slideActive) {
-        appState.video.play();
+      //swaps slide/video and pause /play based on auto transition setting
+      if (appState.data.autoTransition) {
+        if (appState.video.data.playing && !appState.data.slideActive) {
+          appState.video.pause();
+        } else if (appState.data.slideActive) {
+          appState.video.play();
+        }
+        appState.data.slideActive = !appState.data.slideActive;
+      }
+    };
+
+    appState.toggleSlideViewClick = function() {
+      //click always swaps slide/video but doesn't always pause /play
+      if (appState.data.autoTransition) {
+        if (appState.video.data.playing && !appState.data.slideActive) {
+          appState.video.pause();
+        } else if (appState.data.slideActive) {
+          appState.video.play();
+        }
       }
       appState.data.slideActive = !appState.data.slideActive;
     };
@@ -126,7 +142,7 @@ angular.module('lsync.services', [])
     video.data.playing = false;
     video.data.currentTime = 0;
     video.data.aspectRatio = 'aspect16-9';
-    video.data.identifier = 'wyzi9GNZFMU';
+    video.data.identifier = '6IZ9qZFJ0i8';
     video.data.url = '';
 
     ytPlayerInit = function(event) {
@@ -149,12 +165,12 @@ angular.module('lsync.services', [])
     video.play = function() {
       if (!video.data.videoReady) {
         return false;
-      }else if(video.data.unPlayed){
-        video.data.unPlayed=false;
+      } else if (video.data.unPlayed) {
+        video.data.unPlayed = false;
         video.seekTo(1);
         video.data.playing = true;
         return true;
-      }else{
+      } else {
         video.data.playing = true;
         videoPlayer.playVideo();
         return true;
@@ -173,10 +189,10 @@ angular.module('lsync.services', [])
     video.toggle = function() {
       if (!video.data.videoReady) {
         return false;
-      } else if(video.data.playing){
+      } else if (video.data.playing) {
         video.pause();
         return true;
-      }else{
+      } else {
         video.play();
         return true;
       }
@@ -214,8 +230,8 @@ angular.module('lsync.services', [])
 
     //test data... TODO:remove later
     slide.data.aspectRatio = 'aspect16-9';
-    slide.data.length = 7;
-    slide.data.identifier = '1RXSpyU92LtugPzj9-IUnifwEl7Vy-wOztnsmekNVJ9g';
+    slide.data.length = 13;
+    slide.data.identifier = '1pprD-zp6VBa6nBvRKsPvTiAPMFs67oUmHeqV88DOauw';
 
     //methods accessable from SlideState
     slide.setSlide = function(number) {
@@ -237,7 +253,7 @@ angular.module('lsync.services', [])
     };
 
     slide.prev = function() {
-      if (slide.data.slideNumber - 1 < 1) {
+      if (slide.data.slideNumber - 1 < 0) {
         return false;
       }
       slide.data.slideNumber--;
@@ -263,26 +279,48 @@ angular.module('lsync.services', [])
     presentation.data = {
       slideChanges: [{
         timestamp: 5,
-        slide: 1
+        slide: 0
       }, {
         timestamp: 10,
-        slide: 2
+        slide: 1
       }, {
         timestamp: 15,
-        slide: 3
+        slide: 2
       }, {
         timestamp: 20,
-        slide: 4
+        slide: 3
       }, {
         timestamp: 25,
-        slide: 5
+        slide: 4
       }, {
         timestamp: 30,
-        slide: 6
+        slide: 5
       }, {
         timestamp: 35,
+        slide: 6
+      }, {
+        timestamp: 40,
         slide: 7
-      }],
+      }, {
+        timestamp: 45,
+        slide: 8
+      }, {
+        timestamp: 50,
+        slide: 9
+      }, {
+        timestamp: 55,
+        slide: 10
+      }, {
+        timestamp: 60,
+        slide: 11
+      }, {
+        timestamp: 65,
+        slide: 12
+      }, {
+        timestamp: 70,
+        slide: 13
+      }
+    ],
       timeIndex: 1
     };
 
