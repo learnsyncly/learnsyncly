@@ -1,12 +1,10 @@
-<div id="mainWrapper" ng-class="{flyoutActive: data.flyoutActive, slideActive: data.slideActive}">
+<div id="mainWrapper" ng-class="{flyoutActive: data.flyoutActive, slideActive: data.slideActive}" class="row">
   <div ui-view="toolbar"></div>
   <div ui-view="flyout"></div>
-  <div class="row">
     <div id="mainPresentaion" class="section">
       <div id="mainPresentaionWrap">
         <div ui-view="video"></div>
         <div ui-view="slide"></div>
       </div>
     </div>
-  </div>
 </div>

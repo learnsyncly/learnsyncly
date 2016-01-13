@@ -2,22 +2,20 @@
   <div class="section">
     <div class="row">
       <div class="col">
-        <button id="mainToolbarMenuButton" class="waves-effect waves-light light-blue btn btn-large valign" ng-click="toggleFlyout()">
+        <button id="mainToolbarMenuButton" class="waves-effect waves-light btn-large light-blue btn valign" ng-click="toggleFlyout()">
           <i class="material-icons left">menu</i> Menu
         </button>
       </div>
 
       <div class="col floatRight">
-        <button id="flyoutMenuButton" ng-click="toggleSlideView()" class="btn-floating btn-large waves-effect waves-light red">
-          <i class="material-icons">picture_in_picture</i>
-        </button>
+        <button class="waves-effect waves-light btn-large btn-floating" ng-click="slide.prev()"><i class="material-icons left">skip_previous</i>Prev Slide</button>
+        <button class="waves-effect waves-light btn-large btn-floating rightMargin" ng-click="slide.next()"><i class="material-icons left">skip_next</i>Next Slide</button>
+        <button class="waves-effect waves-light btn-large btn-floating red" ng-click="video.play()"><i class="material-icons left">play_arrow</i>Play Video</button>
+        <button class="waves-effect waves-light btn-large btn-floating red rightMargin" ng-click="video.pause()"><i class="material-icons left">pause</i>Pause Video</button>
+        <button id="flyoutMenuButton" ng-click="toggleSlideView()" class="btn-floating btn-large waves-effect waves-light light-blue"><i class="material-icons">picture_in_picture</i></button>
       </div>
       <div class="col floatRight">
-        <div class="valign-wrapper">
-          <h5 class="valign">
-            <a href="#/logout">Logout</a>
-          </h5>
-        </div>
+            <h5 class="rightMargin"><a href="#/logout">Logout</a><h5>
       </div>
     </div>
   </div>
