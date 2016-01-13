@@ -113,7 +113,7 @@ gulp.task('watch', function(){
 gulp.task('devBuild', ['lint','browserify'], printDevComplete);
 
 //dev to launch nodemon and keep an eye on files automatically
-gulp.task('dev', ['watch','nodemon']);
+gulp.task('dev', ['devBuild','watch','nodemon']);
 
 //build wont copy if any tasks in array throw errors
 //need a way to ensure copying doesn't have any errors

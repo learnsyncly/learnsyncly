@@ -1,9 +1,9 @@
 <div id="mainWrapper" ng-class="{flyoutActive: data.flyoutActive, slideActive: data.slideActive}">
   <div ui-view="toolbar"></div>
-  <div ui-view="flyout"></div>
+  <div ui-view="flyout" id="flyoutViewWrap" class="row"></div>
   <div class="row">
-    <div id="mainPresentaion" class="section">
-      <div id="mainPresentaionWrap">
+    <div id="mainPresentaion" class="section" ng-class="data.flyoutActive ? 'col m8 l9' : 'col m12 l12'">
+      <div id="mainPresentaionWrap" class="{{ data.containerAspect }}">
         <div ui-view="video"></div>
         <div ui-view="slide"></div>
       </div>

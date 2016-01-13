@@ -1,11 +1,16 @@
-<div class="container" id='login'>
+<div class="container" id="login">
   <div class="row">
     <div class="col s6 offset-s3">
       <h1>login</h1>
-      <form name="loginForm" ng-submit='login(user)'>
-        <input type='text' ng-model='user.username'>
-        <input type="password" ng-model='user.password'>
-        <button>login</button>
+      <form method="post" ng-submit="login()" name="loginForm" novalidate>
+        <div class="form-group">
+          <input class="form-control input-lg" type="text" name="email" ng-model="user.username" placeholder="Email" required autofocus>
+        </div>
+        <div class="form-group">
+          <input class="form-control input-lg" type="password" name="password" ng-model="user.password" placeholder="Password" required>
+        </div>
+        <button type="submit" class="btn btn-lg btn-block btn-primary">Login</button>
+        <br>
       </form>
       <a href="#/register">Don't have an account? <strong>Register</strong> ...</a>
     </div>

@@ -2,22 +2,29 @@
   <div class="section">
     <div class="row">
       <div class="col">
-        <button id="mainToolbarMenuButton" class="waves-effect waves-light light-blue btn btn-large valign" ng-click="toggleFlyout()">
+        <button id="mainToolbarMenuButton" class="waves-effect waves-light btn-large light-blue btn valign" ng-click="toggleFlyout()">
           <i class="material-icons left">menu</i> Menu
         </button>
       </div>
-
-      <div class="col floatRight">
-        <button id="flyoutMenuButton" ng-click="toggleSlideView()" class="btn-floating btn-large waves-effect waves-light red">
-          <i class="material-icons">picture_in_picture</i>
-        </button>
+      <div class="col">
+        <div class="section">
+          <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" ng-model="data.autoTransition" />
+          <label for="filled-in-box">Auto Transition</label>
+        </div>
       </div>
       <div class="col floatRight">
-        <div class="valign-wrapper">
-          <h5 class="valign">
-            <a href="#">Logout</a>
-          </h5>
-        </div>
+        <button class="waves-effect waves-light btn-large btn-floating" ng-click="slide.prev()"><i class="material-icons left">skip_previous</i></button>
+        <button class="waves-effect waves-light btn-large btn-floating rightMargin" ng-click="slide.next()"><i class="material-icons left">skip_next</i></button>
+        <button class="waves-effect waves-light btn-large btn-floating red rightMargin" ng-click="video.toggle()">
+          <i class="material-icons left" ng-if="!video.data.playing">play_arrow</i>
+          <i class="material-icons left" ng-if="video.data.playing">pause</i>
+        </button>
+        <button id="flyoutMenuButton" ng-click="toggleSlideViewClick()" class="btn-floating btn-large waves-effect waves-light light-blue"><i class="material-icons">picture_in_picture</i></button>
+      </div>
+      <div class="col floatRight">
+          <div class="section">
+            <span class="rightMargin bigText"><a href="#/logout">Logout</a></span>
+          </div>
       </div>
     </div>
   </div>
