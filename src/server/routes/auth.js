@@ -6,7 +6,7 @@ var createToken = function(user) {
   return jwt.sign({
     user: user.username
   }, config.TOKEN_SECRET, {
-    expiresIn: 86400
+    expiresIn: 80000
   });
 };
 
@@ -22,8 +22,7 @@ module.exports = {
             var userToken = createToken(user);
             res.json({
               'success': true,
-              'token': userToken,
-              'status': user.climb
+              'token': userToken
             });
           } else {
             res.sendStatus(401);

@@ -6,19 +6,12 @@ var config = require('../config');
 var userSchema = new Schema({
   username: {
     type: String,
-    required: true
-  },
-  email: {
-    type: String,
     unique: true,
-    lowercase: true
+    required: true
   },
   password: {
     type: String,
     required: true
-  },
-  github: {
-    type: String
   },
   creator: Boolean,
   presentations: Array
