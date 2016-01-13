@@ -10,7 +10,7 @@ angular.module('lsync.main', [])
     //regular setInterval isn't synced to digest cycle and can prevent angular from
     //noticing changes in $scope vars
     var mainInterval = $interval(function() {
-      if ($scope.checkTime()) {
+      if ($scope.checkTime()) {        
         $scope.toggleSlideView();
       }
     }, 500);
