@@ -13,7 +13,6 @@ angular.module('lsync.auth', [])
           $window.localStorage.setItem('com.lsyncly', token);
           $rootScope.hasAuth = true;
           $state.go('main');
-          $scope.checkNotifications();
         })
         .catch(function(error) {
           console.error(error);
