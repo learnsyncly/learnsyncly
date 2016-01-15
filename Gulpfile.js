@@ -104,18 +104,6 @@ gulp.task('start', plugin.shell.task([
   ])
 );
 
-//with love from your friends at HR...
-//delete this and the reference to it in the array
-//on the build task at the bottom of this file
-gulp.task('mwwwahahahahaha', plugin.shell.task([
-    'xdg-open https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    'open https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    'echo read your gulpfile to fix this mwwahahahahaha!!!!'
-  ],{
-    ignoreErrors: true
-  })
-);
-
 //watch
 gulp.task('watch', function(){
   return gulp.watch('./src/public/app/**/*', ['devBuild']).on('error', printWatchError);
@@ -129,7 +117,7 @@ gulp.task('dev', ['devBuild','watch','nodemon']);
 
 //build wont copy if any tasks in array throw errors
 //need a way to ensure copying doesn't have any errors
-gulp.task('build', ['lintStrict','browserifyStrict','mwwwahahahahaha'], function(){
+gulp.task('build', ['lintStrict','browserifyStrict'], function(){
   gulp.src(copyFiles).pipe(gulp.dest('./build'))
   .on('end', printBuildComplete)
   .on('error', printBuildError);
